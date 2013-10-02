@@ -3,7 +3,10 @@
 import config
 import os
 import webapp2
+
 from handlers import *
+
+from google.appengine.ext import ndb
 
 session_config = {}
 session_config['webapp2_extras.sessions'] = {
@@ -13,14 +16,21 @@ session_config['webapp2_extras.sessions'] = {
 
 session_config['webapp2_extras.jinja2'] = {
     'template_path': config.I18N_TEMPLATE_PATH,
-    'environment_args': config.I18N_ENV_ARGS,
     'globals': config.GLOBALS_SET,
 }
 
-application = webapp2.WSGIApplication(
+application = ndb.toplevel(webapp2.WSGIApplication(
     [('/', MainPage),
-     ('/(.*)/about', About),
-     ('/hygie', AboutHygie),
-     ('/activate/(.*)/(.*)', ActivateUser),
+
+     ### /appointment/make/POST_DATA
+     ('/appointment/make/(.*)', MakeAppointment),
+
+     ### /appointment/query/doctor/DATE
+     ('/appointment/query/doctor/(.*)', ShowAvailableDoctor),
+     
+     ### /appointment/query/timeline/DOCTOR/DATE
+     ('/appointment/query/timeline/(.*)/(.*)', ShowAvailableTimeline),
+
+     ('/mockup', MockData),
     ],
-    debug=True, config=session_config)
+    debug=True, config=session_config))
