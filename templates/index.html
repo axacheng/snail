@@ -44,47 +44,49 @@
 			    		</div>
 			  		</div>
 
-			  		<div class="control-group">
-			    		<label class="control-label">Name</label>
-			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
-			    		</div>
-			  		</div>
-			  		<div class="control-group">
-			    		<label class="control-label">Phone</label>
-			    		<div class="controls">
-			      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
-			    		</div>
-			  		</div>
+			  		<div class="control-group" id="pick_time">
+			  		</div> <!-- #pick_time -->
 
-			  		<div class="control-group">
-			    		<label class="control-label">Email</label>
-			    		<div class="controls">
-			      		<input name="form_data" type="email" class="input-xlarge" data-country="US">
-			    		</div>
-			  		</div>
+			  		<br><br><br>
+			  		<div class="control-group" id="appointment_summary">
+				  		<div class="control-group">
+				    		<label class="control-label">Name</label>
+				    		<div class="controls">
+				      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
+				    		</div>
+				  		</div>
 
+				  		<div class="control-group">
+				    		<label class="control-label">Phone</label>
+				    		<div class="controls">
+				      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
+				    		</div>
+				  		</div>
 
-			  		<div class="control-group">
-			    		<label class="control-label">SID</label>
-			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
-			    		</div>
-			  		</div>
+				  		<div class="control-group">
+				    		<label class="control-label">Email</label>
+				    		<div class="controls">
+				      		<input name="form_data" type="email" class="input-xlarge" data-country="US">
+				    		</div>
+				  		</div>
 
-			  		<div class="control-group">
-			    		<div class="controls">
-			      		<input type="submit" class="btn btn-primary" value="Make An Appointment" />
-			    		</div>
-			  		</div>
+				  		<div class="control-group">
+				    		<label class="control-label">SID</label>
+				    		<div class="controls">
+				      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
+				    		</div>
+				  		</div>
 
+				  		<div class="control-group">
+				    		<div class="controls">
+				      		<input type="submit" class="btn btn-primary" value="Make An Appointment" />
+				    		</div>
+				  		</div>
+					  </div> <!-- appointment_summary -->
 			  	</form> <!-- #make_appointment -->
 			  </div> <!-- span8 -->
 			</div> <!-- row-fluid -->
 		</div> <!-- container-fluid -->
-
-
-
 
 		<script type="text/javascript">
 			//
@@ -100,17 +102,27 @@
 
 			//
 			$("#datepicker" ).change(function() {
+				// clean up
+				$('#pick_time').empty()
 				var date = $('#datepicker').val()
   			$.ajax({
   				url: "/appointment/query/timeline/"+doctor + "/" + date,
   				type: "GET",
   				success: function(response_json){
-  					//$.parseJSON(response_json);
-  					alert(response_json)
-  				}
-  			}) //.ajax
+  					response_json = $.parseJSON(response_json)
+  					$.each(response_json, function(index, value){
+  						//alert(value)
+  						$('#pick_time').append("<div class='span4 pick_time' style='background-color:#EEEEEE;height:90px;width:150px'>" + value + "</div>")
+  					}); //.each end				
+  				} // success end
+  			}) //.ajax end
   		}); // .change end
 
+
+			//$(document).on(events, selector, data, handler);
+			$('#make_appointment').on('click', '.pick_time', function(){
+				alert($(this).text())
+			}); // #make_appointment.on end
 
 
 			//
@@ -126,11 +138,9 @@
 			  posting.done(function(data){
 			  	console.log('from server return', data)
 			  });
-			});
+			}); // #make_appointment.submit end
+
 		</script>
-
-
-
 	</body>
 	<footer>
 	</footer>

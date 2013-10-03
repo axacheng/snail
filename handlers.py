@@ -81,6 +81,7 @@ class ShowAvailableTimeline(BaseHandler):
     all_work_hours.remove(12)  # remove lunch time.
     mockup_times = []
     full_times = []
+    available_times = []
 
     for i in all_work_hours:
       new_date_time = date_time + str(i)
@@ -90,9 +91,14 @@ class ShowAvailableTimeline(BaseHandler):
       if count_by_times[1] >= 3:  # we actually can take = 3 instead.
         full_times.append(count_by_times[0])
 
-    available_times = set(mockup_times) - set(full_times)
-    template_args = {'appointment_list': available_times}
-    self.render_template('appointment.html', template_args)
+    available_times_set = set(mockup_times) - set(full_times)
+
+    for available_time in available_times_set:
+      available_times.append(available_time)
+
+    # convert all datetime object to string type, and only get HOUR field.
+    available_times = sorted(map(lambda i: i.strftime("%H"), available_times ))
+    self.response.out.write(json.dumps(available_times))
 
 
 class ShowAvailableDoctor(BaseHandler):
