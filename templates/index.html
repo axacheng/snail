@@ -9,12 +9,37 @@
 	<body>
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
+		<script src="/static/js/bootstrap-formhelpers-phone.format.js"></script>
+		<script src="/static/js/bootstrap-formhelpers-phone.js"></script>
 		<section class="mall">
 			<h3>首頁<h3>
 			<div class="mvl">
 			  <img border="0" src="http://thumbs.dreamstime.com/x/cartoon-racing-snail-6947206.jpg" alt="500">
 			</div>
 		</section>
+
+
+		<form action="/appointment/make/" method="POST" class="form-horizontal">
+  		<div class="control-group">
+    		<label class="control-label">Name</label>
+    		<div class="controls">
+      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
+    		</div>
+  		</div>
+  		<div class="control-group">
+    		<label class="control-label">Phone</label>
+    		<div class="controls">
+      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
+    		</div>
+  		</div>
+  		<div class="control-group">
+    		<label class="control-label">SID</label>
+    		<div class="controls">
+      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
+    		</div>
+  		</div>
+  	</form>
+
 	</body>
 	<footer>
 	</footer>

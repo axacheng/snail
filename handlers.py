@@ -39,11 +39,19 @@ class MainPage(BaseHandler):
 
 
 class MakeAppointment(BaseHandler):
-  def get(self):
+  def get(self, form):
     pass
 
-  def post(self, data):
-    pass
+  def post(self):
+    form = self.request.get_all('form_data')
+    
+    logging.info('fffffffff:%s', form)
+    #form = {
+    #  'appointment_status': 'on_track'
+    #}
+    #self.render_template(form)
+    self.response.write(form)
+    #models.Patient.AddAppointment(form)
 
 
 class ShowAvailableTimeline(BaseHandler):

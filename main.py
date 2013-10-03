@@ -23,7 +23,8 @@ application = ndb.toplevel(webapp2.WSGIApplication(
     [('/', MainPage),
 
      ### /appointment/make/POST_DATA
-     ('/appointment/make/(.*)', MakeAppointment),
+     #('/appointment/make/(.*)', MakeAppointment),
+     ('/appointment/make/', MakeAppointment),
 
      ### /appointment/query/doctor/DATE
      ('/appointment/query/doctor/(.*)', ShowAvailableDoctor),
