@@ -30,8 +30,13 @@ def _json_encode_for_ndb(obj):
 
 class MainPage(BaseHandler):
   def get(self):
-    template_dict = {}
+    available_doctor = models.User.QueryAvailableDoctor().fetch()
+    template_dict = {'available_doctor': available_doctor}
+    #self.response.headers['Content-Type'] = 'application/json'
+    #self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
+
     self.render_template('index.html', template_dict)
+
 
 
   def post(self, data):
@@ -44,14 +49,22 @@ class MakeAppointment(BaseHandler):
 
   def post(self):
     form = self.request.get_all('form_data')
-    
-    logging.info('fffffffff:%s', form)
-    #form = {
-    #  'appointment_status': 'on_track'
-    #}
-    #self.render_template(form)
-    self.response.write(form)
-    #models.Patient.AddAppointment(form)
+    logging.info('xxxxxxxxx:%s', form)
+
+    populate_data = {
+      'appointment_datetime': datetime.datetime.strptime(form[1], "%Y%m%d%H"),
+      'appointment_dr_name': form[0],
+      'appointment_status': 'on_track',
+      'email': form[4],
+      'name': form[2],
+      'phone': form[3],
+    }
+
+    models.Patient.AddAppointment(populate_data)
+
+    self.response.headers['Content-Type'] = 'application/json'
+    self.response.out.write(json.dumps(form))
+
 
 
 class ShowAvailableTimeline(BaseHandler):

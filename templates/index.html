@@ -8,48 +8,128 @@
 	</head>
 	<body>
 		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.format.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.js"></script>
-		<section class="mall">
-			<h3>首頁<h3>
-			<div class="mvl">
-			  <img border="0" src="http://thumbs.dreamstime.com/x/cartoon-racing-snail-6947206.jpg" alt="500">
-			</div>
-		</section>
+
+		<div class="container-fluid">
+			<div class="row-fluid">
+			  <div class="span4">
+			  	<div class="row-fluid">
+			  		{% for doctor in available_doctor %}
+          		<div class="span4">
+          			Dr.: {{ doctor.dr_name }} <br>
+          			Dr. specialty: {{ doctor.dr_major }} <br>
+          			Dr. Description: {{ doctor.dr_description }} <br>
+          		</div>
+          	{% endfor %}
+        	</div>
+			  </div> <!-- span4 -->
+			
+			  <div class="span8">
+					<form id="make_appointment" action="/appointment/make/" method="POST" class="form-horizontal">
+
+			  		<div class="control-group">
+			    		<label class="control-label">Dcotor</label>
+			    		<div class="controls">
+			      		<input name="form_data" class="input-xlarge" type="text" id="doctor_name" value="Lin">
+			    		</div>
+			  		</div>
+
+			  		<div class="control-group">
+			    		<label class="control-label">Date</label>
+			    		<div class="controls">
+			      		<input name="form_data" class="input-xlarge" type="text" id="datepicker" />
+			    		</div>
+			  		</div>
+
+			  		<div class="control-group">
+			    		<label class="control-label">Name</label>
+			    		<div class="controls">
+			      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
+			    		</div>
+			  		</div>
+			  		<div class="control-group">
+			    		<label class="control-label">Phone</label>
+			    		<div class="controls">
+			      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
+			    		</div>
+			  		</div>
+
+			  		<div class="control-group">
+			    		<label class="control-label">Email</label>
+			    		<div class="controls">
+			      		<input name="form_data" type="email" class="input-xlarge" data-country="US">
+			    		</div>
+			  		</div>
 
 
-		<form action="/appointment/make/" method="POST" class="form-horizontal">
-  		<div class="control-group">
-    		<label class="control-label">Name</label>
-    		<div class="controls">
-      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
-    		</div>
-  		</div>
-  		<div class="control-group">
-    		<label class="control-label">Phone</label>
-    		<div class="controls">
-      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
-    		</div>
-  		</div>
-  		<div class="control-group">
-    		<label class="control-label">SID</label>
-    		<div class="controls">
-      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
-    		</div>
-  		</div>
+			  		<div class="control-group">
+			    		<label class="control-label">SID</label>
+			    		<div class="controls">
+			      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
+			    		</div>
+			  		</div>
+
+			  		<div class="control-group">
+			    		<div class="controls">
+			      		<input type="submit" class="btn btn-primary" value="Make An Appointment" />
+			    		</div>
+			  		</div>
+
+			  	</form> <!-- #make_appointment -->
+			  </div> <!-- span8 -->
+			</div> <!-- row-fluid -->
+		</div> <!-- container-fluid -->
 
 
-  		<div class="control-group">
-    		<div class="controls">
-      		<button type="submit" class="btn btn-primary">Make An Appointment</button>
-    		</div>
-  		</div>
-
-  		
 
 
-  	</form>
+		<script type="text/javascript">
+			//
+			var doctor = $('#doctor_name').val()
+			$( "#datepicker" ).datepicker({
+				buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+				buttonImageOnly: true,
+				dateFormat: "yymmdd",
+				minDate: 0,
+				maxDate: "+3M +10D",
+				showOn: "button"}
+			); // .datepicker end
+
+			//
+			$("#datepicker" ).change(function() {
+				var date = $('#datepicker').val()
+  			$.ajax({
+  				url: "/appointment/query/timeline/"+doctor + "/" + date,
+  				type: "GET",
+  				success: function(response_json){
+  					//$.parseJSON(response_json);
+  					alert(response_json)
+  				}
+  			}) //.ajax
+  		}); // .change end
+
+
+
+			//
+  		$("#make_appointment").submit(function(event){
+			  // Stop form from submitting normally
+			  event.preventDefault();
+
+			  var $form = $(this),
+			  url = $form.attr( "action" );
+			  var form_data = $("input[name='form_data']")
+			  var posting = $.post( url, form_data.serialize())
+
+			  posting.done(function(data){
+			  	console.log('from server return', data)
+			  });
+			});
+		</script>
+
+
 
 	</body>
 	<footer>

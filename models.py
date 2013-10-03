@@ -32,9 +32,9 @@ class Patient(polymodel.PolyModel):
         appointment_datetime = populate_data['appointment_datetime'], 
         appointment_dr_name = populate_data['appointment_dr_name'], 
         appointment_status = populate_data['appointment_status'],
-        email = populate_data['email'],
-        name = populate_data['name'],
-        phone = populate_data['phone'])
+        email = populate_data.get('email'),
+        name = populate_data.get('name'),
+        phone = populate_data.get('phone'))
     appointment.put_async()
 
 
