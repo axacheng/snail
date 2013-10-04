@@ -5,27 +5,68 @@
 	    <title> Main - Snail </title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	</head>
-	<body>
-		<script src="http://code.jquery.com/jquery.js"></script>
+	    <link href="/static/css/snail-flatui.css" rel="stylesheet" media="screen">
+	    <script src="http://code.jquery.com/jquery.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.format.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.js"></script>
-
+	</head>
+	<body>
+		<header>
+			<div class="navbar">
+				<span class="navbar-brand">
+					"@ Snail
+				</span>
+				<span class="nav">
+					<button class="btn btn-special1">Call xxxxxxx </button>
+				</span>
+			</div>
+		</header>
 		<div class="container-fluid">
-			<div class="row-fluid">
-			  <div class="span4">
-			  	<div class="row-fluid">
+			<div class="row-fluid mvxll">
+			  	<h2> Schedule An Appointment </h2>
+			  	<div class="span5">
+			  		<div id="step1" class="mvll">
+					<h3>
+						<span class="label"> Step 1 : Choose  Your  Doctor </span>
+					</h3>
+			  		<div class="row-fluid">
 			  		{% for doctor in available_doctor %}
-          		<div class="span4">
-          			Dr.: {{ doctor.dr_name }} <br>
-          			Dr. specialty: {{ doctor.dr_major }} <br>
-          			Dr. Description: {{ doctor.dr_description }} <br>
-          		</div>
-          	{% endfor %}
-        	</div>
-			  </div> <!-- span4 -->
+	          			<button class="btn btn-warning mls mtm">
+	          				<h4>
+	          					Dr.: {{ doctor.dr_name }} 
+	          				</h4>
+	          				<div class="btnfonts">
+		          				Dr. specialty: {{ doctor.dr_major }} 
+		          			</div>
+	    	      			<div class="btnfonts">
+	        	  				Dr. Description: {{ doctor.dr_description }} 
+	          				</div>
+	          			</button>
+	          		{% endfor %}
+        			</div>
+			  		</div> <!-- step1 -->
+			  	</div><!--span6(1)-->
+			  	<div class="span6 pull-right">
+			  		<div id="step2" class="mvll">
+			  		<h3>
+			  			<span class="label"> Step 2 : Select  A  Date 
+			  			</span>
+			  		</h3>
+			  		<div class="control-group" id="select_date">
+    					<input type="xtext" class="input-hg" value="YYYY-MM-DD" id="datepicker" />
+					</div><!--select_date-->
+			  		</div> <!--step2-->
+			  		<div id="step3" class="mvll">
+			  		<h3>
+			  			<span class="label"> Step 3 : Pick  Time
+			  			</span>
+			  		</h3>
+					<div class="control-group" id="pick_time">
+			  		</div> <!-- #pick_time -->
+			  		</div><!--step3-->
+			  	</div><!--span6(2)-->
 			
 			  <div class="span8">
 					<form id="make_appointment" action="/appointment/make/" method="POST" class="form-horizontal">
@@ -37,15 +78,14 @@
 			    		</div>
 			  		</div>
 
-			  		<div class="control-group">
+					<div class="control-group">
 			    		<label class="control-label">Date</label>
 			    		<div class="controls">
 			      		<input name="form_data" class="input-xlarge" type="text" id="datepicker" />
 			    		</div>
 			  		</div>
 
-			  		<div class="control-group" id="pick_time">
-			  		</div> <!-- #pick_time -->
+			  		
 
 			  		<br><br><br>
 			  		<div class="control-group" id="appointment_summary">
@@ -92,7 +132,7 @@
 			//
 			var doctor = $('#doctor_name').val()
 			$( "#datepicker" ).datepicker({
-				buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+				buttonImage: "static/img/planner-primary.png",
 				buttonImageOnly: true,
 				dateFormat: "yymmdd",
 				minDate: 0,
@@ -112,7 +152,7 @@
   					response_json = $.parseJSON(response_json)
   					$.each(response_json, function(index, value){
   						//alert(value)
-  						$('#pick_time').append("<div class='span4 pick_time' style='background-color:#EEEEEE;height:90px;width:150px'>" + value + "</div>")
+  						$('#pick_time').append("<div class='pick_time pick_timetable'>" + value + "</div>")
   					}); //.each end				
   				} // success end
   			}) //.ajax end
