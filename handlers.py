@@ -32,11 +32,7 @@ class MainPage(BaseHandler):
   def get(self):
     available_doctor = models.User.QueryAvailableDoctor().fetch()
     template_dict = {'available_doctor': available_doctor}
-    #self.response.headers['Content-Type'] = 'application/json'
-    #self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
-
     self.render_template('index.html', template_dict)
-
 
 
   def post(self, data):
@@ -44,7 +40,7 @@ class MainPage(BaseHandler):
 
 
 class MakeAppointment(BaseHandler):
-  def get(self, form):
+  def get(self):
     pass
 
   def post(self):

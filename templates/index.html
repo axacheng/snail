@@ -24,7 +24,7 @@
 			</div>
 		</header>
 		<div class="container-fluid">
-			<div class="row-fluid mvxll">
+			<div class="row-fluid mvxll" id="choose_datetime">
 			  	<h2> Schedule An Appointment </h2>
 			  	<div class="span5">
 			  		<div id="step1" class="mvll">
@@ -35,7 +35,7 @@
 			  		{% for doctor in available_doctor %}
 	          			<button class="btn btn-warning mls mtm">
 	          				<h4>
-	          					Dr.: {{ doctor.dr_name }} 
+	          					Dr.:<div class="dr_name">{{ doctor.dr_name }}</div>
 	          				</h4>
 	          				<div class="btnfonts">
 		          				Dr. specialty: {{ doctor.dr_major }} 
@@ -47,7 +47,7 @@
 	          		{% endfor %}
         			</div>
 			  		</div> <!-- step1 -->
-			  	</div><!--span6(1)-->
+			  	</div><!--span5(1)-->
 			  	<div class="span6 pull-right">
 			  		<div id="step2" class="mvll">
 			  		<h3>
@@ -67,25 +67,24 @@
 			  		</div> <!-- #pick_time -->
 			  		</div><!--step3-->
 			  	</div><!--span6(2)-->
-			
+			</div><!--row-fluid mvxll-->
+			<div class="row-fluid mvxll" id="appointment_form">
 			  <div class="span8">
 					<form id="make_appointment" action="/appointment/make/" method="POST" class="form-horizontal">
 
 			  		<div class="control-group">
 			    		<label class="control-label">Dcotor</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="text" id="doctor_name" value="Lin">
+			      		<input name="form_data" class="input-xlarge" type="text" id="doctor_name" value="">
 			    		</div>
 			  		</div>
 
-					<div class="control-group">
+						<div class="control-group">
 			    		<label class="control-label">Date</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="text" id="datepicker" />
+			      		<input name="form_data" class="input-xlarge" type="text" id="date" />
 			    		</div>
 			  		</div>
-
-			  		
 
 			  		<br><br><br>
 			  		<div class="control-group" id="appointment_summary">
@@ -129,8 +128,17 @@
 		</div> <!-- container-fluid -->
 
 		<script type="text/javascript">
-			//
-			var doctor = $('#doctor_name').val()
+
+			// Initial
+			$('#appointment_form').hide()
+			
+			// Step 1
+			$(".btn-warning").on('click', function(){
+      	var dr_name = $(this).children().children().text()
+      	$('#doctor_name').val(dr_name)
+      });
+
+			// Step 2.1
 			$( "#datepicker" ).datepicker({
 				beforeShowDay: $.datepicker.noWeekends,
 				buttonImage: "static/img/planner-primary.png",
@@ -141,30 +149,50 @@
 				showOn: "button"}
 			); // .datepicker end
 
-			//
+			// Step 2.2
 			$("#datepicker" ).change(function() {
 				// clean up
 				$('#pick_time').empty()
+
+				// set date to form for /appointment/make/ handler
 				var date = $('#datepicker').val()
-  			$.ajax({
-  				url: "/appointment/query/timeline/" + doctor + "/" + date,
-  				type: "GET",
-  				success: function(response_json){
-  					response_json = $.parseJSON(response_json)
-  					$.each(response_json, function(index, value){
-  						//alert(value)
-  						$('#pick_time').append("<div class='pick_time pick_timetable'>" + value + "</div>")
-  					}); //.each end				
-  				} // success end
-  			}) //.ajax end
+				var doctor = $('#doctor_name').val()
+				if (!doctor.length) {
+					alert('Please choose at least one doctor.')
+				} // if end
+
+				else {
+	  			$.ajax({
+	  				url: "/appointment/query/timeline/" + doctor + "/" + date,
+	  				type: "GET",
+	  				success: function(response_json){
+	  					response_json = $.parseJSON(response_json)
+	  					$.each(response_json, function(index, value){
+	  						//alert(value)
+	  						$('#pick_time').append("<div class='pick_time pick_timetable'>" + value + "</div>")
+	  					}); //.each end				
+	  				} // success end
+	  			}) //.ajax end	
+				} // else end
   		}); // .change end
 
-
+			// Step 3
 			//$(document).on(events, selector, data, handler);
 			$('#pick_time').on('click', '.pick_time', function(){
-				alert($(this).text())
-			}); // #make_appointment.on end
+				var dr_name = $('#dr_name').text()
+				var time = $(this).text()
 
+				// set time to $('#date') with its value
+				// format would be 'YYYYMMDDHH'
+				var date = $('#datepicker').val()
+				var date_time = date + time
+				$('#date').val("")
+				$('#date').val(date_time)
+				console.log(date_time)
+
+				$('#choose_datetime').hide()
+				$('#appointment_form').show()
+			}); // #make_appointment.on end
 
 			//
   		$("#make_appointment").submit(function(event){
