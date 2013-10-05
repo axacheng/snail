@@ -132,6 +132,7 @@
 			//
 			var doctor = $('#doctor_name').val()
 			$( "#datepicker" ).datepicker({
+				beforeShowDay: $.datepicker.noWeekends,
 				buttonImage: "static/img/planner-primary.png",
 				buttonImageOnly: true,
 				dateFormat: "yymmdd",
@@ -146,7 +147,7 @@
 				$('#pick_time').empty()
 				var date = $('#datepicker').val()
   			$.ajax({
-  				url: "/appointment/query/timeline/"+doctor + "/" + date,
+  				url: "/appointment/query/timeline/" + doctor + "/" + date,
   				type: "GET",
   				success: function(response_json){
   					response_json = $.parseJSON(response_json)
