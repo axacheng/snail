@@ -8,6 +8,7 @@
 	    <link href="/static/css/snail-flatui.css" rel="stylesheet" media="screen">
 	    <script src="http://code.jquery.com/jquery.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.format.js"></script>
 		<script src="/static/js/bootstrap-formhelpers-phone.js"></script>
@@ -19,7 +20,7 @@
 					"@ Snail
 				</span>
 				<span class="nav">
-					<button class="btn btn-special1">Call xxxxxxx </button>
+					<label class="btn btn-special1">Call xxxxxxx </label>
 				</span>
 			</div>
 		</header>
@@ -48,7 +49,7 @@
         			</div>
 			  		</div> <!-- step1 -->
 			  	</div><!--span5(1)-->
-			  	<div class="span6 pull-right">
+			  	<div class="span6 pull-right" id="step2_and_step3">
 			  		<div id="step2" class="mvll">
 			  		<h3>
 			  			<span class="label"> Step 2 : Select  A  Date 
@@ -69,57 +70,56 @@
 			  	</div><!--span6(2)-->
 			</div><!--row-fluid mvxll-->
 			<div class="row-fluid mvxll" id="appointment_form">
-			  <div class="span8">
+				<h2> Leave Your Information </h2>
+			  	<div class="mxll">
 					<form id="make_appointment" action="/appointment/make/" method="POST" class="form-horizontal">
 
-			  		<div class="control-group">
-			    		<label class="control-label">Dcotor</label>
+			  		<div class="control-group span5">
+			    		<label class="control-label" style="font-size:30px;">Dcotor</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="text" id="doctor_name" value="">
+			      		<input name="form_data" class="form-control input-hg" type="xtext" id="doctor_name" value="" disabled="disabled">
+			    		</div>
+			  		</div>
+					<div class="control-group span5" style="margin-left:30px;">
+			    		<label class="control-label" style="font-size:30px;">Date</label>
+			    		<div class="controls">
+			      		<input name="form_data" class="form-control input-hg" type="xtext" id="date" disabled="disabled"/>
 			    		</div>
 			  		</div>
 
-						<div class="control-group">
-			    		<label class="control-label">Date</label>
-			    		<div class="controls">
-			      		<input name="form_data" class="input-xlarge" type="text" id="date" />
-			    		</div>
-			  		</div>
-
-			  		<br><br><br>
 			  		<div class="control-group" id="appointment_summary">
-				  		<div class="control-group">
-				    		<label class="control-label">Name</label>
-				    		<div class="controls">
-				      		<input name="form_data" class="input-xlarge" type="text" id="patient_name" placeholder="Name">
-				    		</div>
+			  			<div class="row-fluid">
+				  			<div class="control-group span5">
+				    			<label class="control-label" style="font-size:30px;">Name</label>
+				    			<div class="controls">
+				      				<input name="form_data" class="form-control input-hg" type="textx" id="patient_name" autofocus>
+				    			</div>
+				  			</div>
+				  			<div class="control-group span5" style="margin-left:30px;">
+				    			<label class="control-label" style="font-size:30px;">SID</label>
+				    			<div class="controls">
+				      				<input name="form_data" class="form-control input-hg" type="number" id="sid" min="0">
+				    			</div>
+				  			</div>
 				  		</div>
-
-				  		<div class="control-group">
-				    		<label class="control-label">Phone</label>
+			  			<div class="row-fluid">
+				  			<div class="control-group span5">
+				    		<label class="control-label" style="font-size:30px;">Phone</label>
 				    		<div class="controls">
-				      		<input name="form_data" type="text" class="input-xlarge bfh-phone" data-country="US">
+				      		<input name="form_data" type="textx" class="form-control input-hg bfh-phone" data-country="US">
 				    		</div>
+				    		</div>
+				  			<div class="control-group span5" style="margin-left:30px;">
+				    		<label class="control-label" style="font-size:30px;">Email</label>
+				    		<div class="controls">
+				      		<input name="form_data" type="email" class="form-control input-hg" data-country="US">
+				    		</div>
+				  			</div>
 				  		</div>
-
-				  		<div class="control-group">
-				    		<label class="control-label">Email</label>
-				    		<div class="controls">
-				      		<input name="form_data" type="email" class="input-xlarge" data-country="US">
-				    		</div>
-				  		</div>
-
-				  		<div class="control-group">
-				    		<label class="control-label">SID</label>
-				    		<div class="controls">
-				      		<input name="form_data" class="input-xlarge" type="number" id="sid" placeholder="SID">
-				    		</div>
-				  		</div>
-
-				  		<div class="control-group">
-				    		<div class="controls">
-				      		<input type="submit" class="btn btn-primary" value="Make An Appointment" />
-				    		</div>
+				  		<div class="row-fluid">
+				  				<input type="submit" class="btn btn-warning input-hg" style="margin-left:500px;height:65px;" value="Revise" id="revise_schedule"/>
+				      			<input type="submit" class="btn btn-primary input-hg"
+				      			style="margin-left:5px;height:65px;" value="Make An Appointment" />		
 				  		</div>
 					  </div> <!-- appointment_summary -->
 			  	</form> <!-- #make_appointment -->
@@ -131,7 +131,20 @@
 
 			// Initial
 			$('#appointment_form').hide()
+
 			
+			// overlay layout
+			$.blockUI.defaults.message = null
+			$.blockUI.defaults.overlayCSS.cursor = null
+			$.blockUI.defaults.overlayCSS.backgroundColor = '#655c89'
+
+			$('#step2_and_step3').block();
+
+			$('.btn-warning').on('click',function(){
+				$('#step2_and_step3').unblock();
+				$('#step3').block();
+			})
+
 			// Step 1
 			$(".btn-warning").on('click', function(){
       	var dr_name = $(this).children().children().text()
@@ -139,7 +152,7 @@
       });
 
 			// Step 2.1
-			$( "#datepicker" ).datepicker({
+			$("#datepicker").datepicker({
 				beforeShowDay: $.datepicker.noWeekends,
 				buttonImage: "static/img/planner-primary.png",
 				buttonImageOnly: true,
@@ -150,7 +163,7 @@
 			); // .datepicker end
 
 			// Step 2.2
-			$("#datepicker" ).change(function() {
+			$("#datepicker").change(function() {
 				// clean up
 				$('#pick_time').empty()
 
@@ -170,6 +183,9 @@
 	  					$.each(response_json, function(index, value){
 	  						//alert(value)
 	  						$('#pick_time').append("<div class='pick_time pick_timetable'>" + value + "</div>")
+	  						//
+	  						$('#step3').unblock();
+
 	  					}); //.each end				
 	  				} // success end
 	  			}) //.ajax end	
@@ -195,6 +211,17 @@
 			}); // #make_appointment.on end
 
 			//
+
+
+		// Revise the schedule 
+		$("#revise_schedule").on('click',function(){
+			$('#choose_datetime').show()
+			$('#appointment_form').hide()
+			$('#datepicker').empty()
+			$('#pick_time').empty()
+		});	
+
+
   		$("#make_appointment").submit(function(event){
 			  // Stop form from submitting normally
 			  event.preventDefault();
