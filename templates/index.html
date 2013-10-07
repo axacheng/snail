@@ -229,6 +229,7 @@
 
 
   		$("#make_appointment").submit(function(event){
+
 			  $('#date').removeAttr("disabled", "disabled")
 			  $('#doctor_name').removeAttr("disabled", "disabled")
 
@@ -240,9 +241,19 @@
 			  var form_data = $("input[name='form_data']")
 			  var posting = $.post( url, form_data.serialize())
 
-
 			  posting.done(function(data){
 			  	console.log('from server return', data)
+			  	$('#appointment_form').block({
+			  		message:'<h4>We\'ve got appointment for you.</h4>',
+			  		css:{width: '400px',
+			  				 height:'100px',
+			  				 color: '#FFF',
+			  				 backgroundColor:'#655c89'}
+			  	})
+			  	setTimeout(function(){
+			  		window.location.reload();
+			  	}, 2000);
+			  	
 			  });
 			}); // #make_appointment.submit end
 
