@@ -48,24 +48,28 @@
 	          		{% endfor %}
         			</div>
 			  		</div> <!-- step1 -->
+			  		<!--測試中，要換位置 <div class="calltag">
+						<p>No proper time?</p>
+						<h4> <img src="/static/img/phone-2-48.png"> Call us: xxxxxx ! </h4>
+					</div>-->
 			  	</div><!--span5(1)-->
 			  	<div class="span6 pull-right" id="step2_and_step3">
 			  		<div id="step2" class="mvll">
-			  		<h3>
-			  			<span class="label"> Step 2 : Select  A  Date 
-			  			</span>
-			  		</h3>
-			  		<div class="control-group" id="select_date">
-    					<input type="xtext" class="input-hg" value="YYYY-MM-DD" id="datepicker" />
-					</div><!--select_date-->
+				  		<h3>
+				  			<span class="label"> Step 2 : Select  A  Date 
+				  			</span>
+				  		</h3>
+				  		<div class="control-group" id="select_date">
+	    					<input type="xtext" class="input-hg" value="YYYY-MM-DD" id="datepicker" />
+						</div><!--select_date-->
 			  		</div> <!--step2-->
 			  		<div id="step3" class="mvll">
-			  		<h3>
-			  			<span class="label"> Step 3 : Pick  Time
-			  			</span>
-			  		</h3>
-					<div class="control-group" id="pick_time">
-			  		</div> <!-- #pick_time -->
+				  		<h3>
+				  			<span class="label"> Step 3 : Pick  Time
+				  			</span>
+				  		</h3>
+						<div class="control-group" id="pick_time">
+				  		</div> <!-- #pick_time -->
 			  		</div><!--step3-->
 			  	</div><!--span6(2)-->
 			</div><!--row-fluid mvxll-->
@@ -77,13 +81,13 @@
 			  		<div class="control-group span5">
 			    		<label class="control-label" style="font-size:30px;">Dcotor</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="form-control input-hg" type="xtext" id="doctor_name" value="" disabled="disabled">
+			      		<input name="form_data" class="form-control input-hg" type="text" id="doctor_name" value="" disabled="disabled">
 			    		</div>
 			  		</div>
 					<div class="control-group span5" style="margin-left:30px;">
 			    		<label class="control-label" style="font-size:30px;">Date</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="form-control input-hg" type="xtext" id="date" disabled="disabled"/>
+			      		<input name="form_data" class="form-control input-hg" type="text" id="date" disabled="disabled"/>
 			    		</div>
 			  		</div>
 
@@ -92,7 +96,7 @@
 				  			<div class="control-group span5">
 				    			<label class="control-label" style="font-size:30px;">Name</label>
 				    			<div class="controls">
-				      				<input name="form_data" class="form-control input-hg" type="textx" id="patient_name" autofocus>
+				      				<input name="form_data" class="form-control input-hg" type="text" id="patient_name" autofocus>
 				    			</div>
 				  			</div>
 				  			<div class="control-group span5" style="margin-left:30px;">
@@ -106,7 +110,7 @@
 				  			<div class="control-group span5">
 				    		<label class="control-label" style="font-size:30px;">Phone</label>
 				    		<div class="controls">
-				      		<input name="form_data" type="textx" class="form-control input-hg bfh-phone" data-country="US">
+				      		<input name="form_data" type="text" class="form-control input-hg bfh-phone" data-country="US">
 				    		</div>
 				    		</div>
 				  			<div class="control-group span5" style="margin-left:30px;">
@@ -131,6 +135,7 @@
 
 			// Initial
 			$('#appointment_form').hide()
+			//$('.calltag').hide()<---這個還在測試，請先不要理他 
 
 			
 			// overlay layout
@@ -185,6 +190,7 @@
 	  						$('#pick_time').append("<div class='pick_time pick_timetable'>" + value + "</div>")
 	  						//
 	  						$('#step3').unblock();
+	  						$('.calltag').show('slide');
 
 	  					}); //.each end				
 	  				} // success end
@@ -208,6 +214,7 @@
 
 				$('#choose_datetime').hide()
 				$('#appointment_form').show()
+				$('[autofocus]:first').focus()
 			}); // #make_appointment.on end
 
 			//
@@ -217,8 +224,9 @@
 		$("#revise_schedule").on('click',function(){
 			$('#choose_datetime').show()
 			$('#appointment_form').hide()
-			$('#datepicker').empty()
+			//$('.calltag').hide()
 			$('#pick_time').empty()
+			$('#step2_and_step3').block()
 		});	
 
 

@@ -2686,7 +2686,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
   -webkit-box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
   -moz-box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
   box-shadow: -14px 14px 0 rgba(52, 73, 94, 0.06);
+  z-index: 9999 !important;
 }
+
 .ui-datepicker .ui-datepicker-header {
   background-color: #1abc9c;
   color: #ffffff;
@@ -5413,7 +5415,7 @@ input[type="xtext"]{
   border: 0px inset;
 }
 
-input[type="textx"],
+input[type="text"],
 input[type="email"],
 input[type="number"]{
   display: inline-block;
@@ -5433,7 +5435,7 @@ input[type="number"]{
   border: 2px inset;
 }
 
-input[type="textx"]:focus,
+input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="email"]:focus {
   border-color: #1abc9c;
@@ -5473,3 +5475,12 @@ input[type="email"]:focus {
 .mxll {
   margin-top:50px;
 }
+
+/*.calltag {
+  background-color: #332E44 ;
+  border-radius: 5px;
+  width:350px;
+  padding: 8px;
+  padding-left: 16px;
+  margin-left: -22px;
+}*/
