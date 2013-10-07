@@ -77,13 +77,13 @@
 			  		<div class="control-group span5">
 			    		<label class="control-label" style="font-size:30px;">Dcotor</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="form-control input-hg" type="xtext" id="doctor_name" value="" disabled="disabled">
+			      		<input name="form_data" class="form-control input-hg" type="xtext" id="doctor_name" value="" disabled="false">
 			    		</div>
 			  		</div>
 					<div class="control-group span5" style="margin-left:30px;">
 			    		<label class="control-label" style="font-size:30px;">Date</label>
 			    		<div class="controls">
-			      		<input name="form_data" class="form-control input-hg" type="xtext" id="date" disabled="disabled"/>
+			      		<input name="form_data" class="form-control input-hg" type="xtext" id="date" disabled="false"/>
 			    		</div>
 			  		</div>
 
@@ -128,7 +128,6 @@
 		</div> <!-- container-fluid -->
 
 		<script type="text/javascript">
-
 			// Initial
 			$('#appointment_form').hide()
 
@@ -208,6 +207,12 @@
 
 				$('#choose_datetime').hide()
 				$('#appointment_form').show()
+
+							//
+			//$('input[name=patient_name]').focus();
+			$('#patient_name').focus()
+
+
 			}); // #make_appointment.on end
 
 			//
@@ -230,6 +235,8 @@
 			  url = $form.attr( "action" );
 			  var form_data = $("input[name='form_data']")
 			  var posting = $.post( url, form_data.serialize())
+			  $('#date').removeAttr("disabled", "disabled")
+			  $('#doctor_name').removeAttr("disabled", "disabled")
 
 			  posting.done(function(data){
 			  	console.log('from server return', data)
