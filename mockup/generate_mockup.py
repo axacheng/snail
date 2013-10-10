@@ -40,101 +40,101 @@ class MockData(webapp2.RequestHandler):
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 9, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Axa Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 9, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 9, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 10, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 10, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 14, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 14, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'VV Cheng',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'JUJU',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 11, 18, 9, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'JUJU',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 12, 20, 9, 0),
                          'appointment_dr_name': 'Lin',
                          'appointment_status': 'on_track',
-                         'email': 'axa.cheng@gmail.com',
+                         'email': [('axa.cheng@gmail.com')],
                          'name': 'Kiki',
-                         'phone': '28825252'}
+                         'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
 
 

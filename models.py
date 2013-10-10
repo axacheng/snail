@@ -8,7 +8,8 @@ from google.appengine.datastore.datastore_query import Cursor
 
 
 class Patient(polymodel.PolyModel):
-  address = ndb.StringProperty()
+  address = ndb.StringProperty(repeated=True)
+  zip_code = ndb.IntegerProperty()
   admin_notes = ndb.TextProperty()
   bill = ndb.IntegerProperty()
   blood = ndb.StringProperty()
@@ -16,13 +17,14 @@ class Patient(polymodel.PolyModel):
   gender = ndb.StringProperty()
   date_created_this_patient = ndb.DateTimeProperty(auto_now_add=True)
   date_last_updated = ndb.DateTimeProperty(auto_now=True)
-  email = ndb.StringProperty()
+  email = ndb.StringProperty(repeated=True)
   insurance_type = ndb.StringProperty()
   insurance_id = ndb.StringProperty()
   name = ndb.StringProperty()
+  passport = ndb.StringProperty()
   patient_status = ndb.BooleanProperty()
-  phone = ndb.StringProperty()
-  sid = ndb.StringProperty()
+  phone = ndb.StringProperty(repeated=True)
+  ssn = ndb.StringProperty()
   side_effect = ndb.StringProperty(repeated=True)
 
 
@@ -34,7 +36,8 @@ class Patient(polymodel.PolyModel):
         appointment_status = populate_data['appointment_status'],
         email = populate_data.get('email'),
         name = populate_data.get('name'),
-        phone = populate_data.get('phone'))
+        phone = populate_data.get('phone'),
+        ssn = populate_data.get('ssn'))
     appointment.put_async()
 
 

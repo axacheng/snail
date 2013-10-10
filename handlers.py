@@ -51,9 +51,10 @@ class MakeAppointment(BaseHandler):
       'appointment_datetime': datetime.datetime.strptime(form[1], "%Y%m%d%H"),
       'appointment_dr_name': form[0],
       'appointment_status': 'on_track',
-      'email': form[4],
+      'email': [(form[5])],
       'name': form[2],
-      'phone': form[3],
+      'phone': [(form[4])],
+      'ssn': form[3],
     }
 
     models.Patient.AddAppointment(populate_data)
