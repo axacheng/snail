@@ -66,7 +66,11 @@ def md5_decrypt(enc_text, password="", iv_len=16):
   if not password:
   	password = API_PRIVATE_KEY
 
-  enc_text = b64decode(enc_text)
+  try:
+    enc_text = b64decode(enc_text)
+  except TypeError:
+    return False
+
   n = len(enc_text)
   i = iv_len
   plain_text = ""
