@@ -51,10 +51,6 @@ class BaseHandler(webapp2.RequestHandler):
   def debug(self, data):
     pass
 
-  #render get uuid
-  def get_user_id(self):
-    pass
-
   # locate
   def locale(self, locale_data=None):
     session = self.session_store.get_session()
