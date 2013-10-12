@@ -2,6 +2,8 @@
 import datetime
 import logging
 
+import report
+
 from google.appengine.ext import ndb
 from google.appengine.ext.ndb import polymodel
 from google.appengine.datastore.datastore_query import Cursor
@@ -24,7 +26,7 @@ class Patient(ndb.Model):
   passport = ndb.StringProperty()
   patient_status = ndb.BooleanProperty()
   phone = ndb.StringProperty(repeated=True)
-  report = ndb.StructuredProperty(Report)
+  report = ndb.StructuredProperty(report.Report)
   ssn = ndb.StringProperty()
   side_effect = ndb.StringProperty(repeated=True)
 
@@ -51,7 +53,27 @@ class Patient(ndb.Model):
                     ).order(-Appointment.appointment_datetime)
 
 
-
   @classmethod
   def QueryPaitentByUuid(cls, uuid):
     return cls.query(User.dr_status == 'Working')
+
+
+  @classmethod
+  def QueryPaitentByType(cls, search_type, search_string):
+    logging.info('qqqqqqqqqqq')
+    return 'xxxxxxxx'
+    if search_type == 'ssn':
+      return cls.query(Patient.ssn == search_string).fetch()
+
+    elif search_type == 'email':
+      return cls.query(Patient.email == search_string).fetch()
+
+    elif search_type == 'phone':
+      return cls.query(Patient.phone == search_string).fetch()
+
+
+class Appointment(Patient):
+  """docstring for Profile"""
+  appointment_datetime = ndb.DateTimeProperty()
+  appointment_dr_name = ndb.StringProperty()
+  appointment_status = ndb.StringProperty()

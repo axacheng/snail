@@ -4,7 +4,7 @@ import config
 import os
 import webapp2
 
-from admin import *
+from admin.admin_handlers import *
 from api.api_handlers import *
 from lib import *
 from web.appointment import *
@@ -35,7 +35,15 @@ application = ndb.toplevel(webapp2.WSGIApplication(
      ### /appointment/query/timeline/DOCTOR/DATE
      ('/appointment/query/timeline/(.*)/(.*)', ShowAvailableTimeline),
 
+     ### /api/query/token
+     ('/api/query/(.*)', GetPatientInfo),
+
      ('/mockup', MockData),
+
+     ### /snail_admin/search/patient/email/axa.cheng@gmail.com
+     ('/snail_admin/search/patient/(.*)/(.*)', GetPatient),
+
+
     ],
     debug=True, config=session_config))
 

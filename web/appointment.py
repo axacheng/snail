@@ -18,7 +18,8 @@ from base_handler import BaseHandler
 from lib import *
 from mockup.generate_mockup import *
 import config
-import models
+from models.employee import *
+
 import webapp2
 
 
@@ -32,7 +33,7 @@ def _json_encode_for_ndb(obj):
 
 class MainPage(BaseHandler):
   def get(self):
-    available_doctor = models.Employee.QueryAvailableDoctor().fetch()
+    available_doctor = models.employee.Employee.QueryAvailableDoctor().fetch()
     template_dict = {'available_doctor': available_doctor}
     self.render_template('index.html', template_dict)
 
@@ -58,7 +59,7 @@ class MakeAppointment(BaseHandler):
       'ssn': form[3],
     }
 
-    models.Patient.AddAppointment(populate_data)
+    models.patient.Patient.AddAppointment(populate_data)
 
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(json.dumps(form))

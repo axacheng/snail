@@ -15,10 +15,11 @@ import uuid
 
 ### 我們自己寫的 library
 from base_handler import BaseHandler
-from lib import *
-from mockup.generate_mockup import *
+from lib import utils
 import config
-import models
+from models.patient import *
+from models.employee import *
+
 import webapp2
 
 
@@ -35,20 +36,22 @@ class GetPatientInfo(BaseHandler):
       valided_result = {'mtime':datetime(), 'uuid':121221212}
       or valided_result is False
     """
-    valided_result = tools.md5_encrypt(token)
+    logging.info('tttttttt:%s', token)
 
+    valided_result = utils.md5_decrypt(token)
     if not valided_result:
       #kick it out!
       return self.render_json({'status':'fail',
                                'errmsg':'Token is failed.',
                               })
     # Query models.Employees by given uuid
+    logging.info('do something...')
 
 
 class ShowAvailableTimeline(BaseHandler):
   def get(self, doctor, date_time):
     converted_date_time = datetime.datetime.strptime(date_time, "%Y%m%d")
-    timelines = models.Patient.QueryAppointmentAvailableTimetable(doctor, converted_date_time)
+    timelines = models.patient.Patient.QueryAppointmentAvailableTimetable(doctor, converted_date_time)
     appointments = timelines.fetch()
     appointment_times = Counter()
 
@@ -82,12 +85,12 @@ class ShowAvailableTimeline(BaseHandler):
 class ShowAvailableDoctor(BaseHandler):
   def get(self, date):
     if not date:
-      available_doctor = models.Employee.QueryAvailableDoctor()
+      available_doctor = models.employee.Employee.QueryAvailableDoctor()
       self.response.headers['Content-Type'] = 'application/json'
       self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
 
     else:
-      available_doctor = models.Employee.QueryAvailableDoctor(date)
+      available_doctor = models.employee.Employee.QueryAvailableDoctor(date)
       self.response.headers['Content-Type'] = 'application/json'
       self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
 

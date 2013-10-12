@@ -6,6 +6,7 @@ from google.appengine.ext import ndb
 from google.appengine.ext.ndb import polymodel
 from google.appengine.datastore.datastore_query import Cursor
 
+
 class Report(polymodel.PolyModel):
   """docstring for Profile"""
   report_date = ndb.DateTimeProperty(auto_now_add=True)
