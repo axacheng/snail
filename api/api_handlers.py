@@ -24,6 +24,10 @@ import webapp2
 from google.appengine.ext import ndb
 
 
+def _json_encode_for_ndb(obj):
+    return json.dumps(obj.to_dict())
+    
+
 class GetPatientInfo(BaseHandler):
   def get(self, token):
     """
@@ -76,19 +80,3 @@ class ShowAvailableTimeline(BaseHandler):
     # convert all datetime object to string type, and only get HOUR field.
     available_times = sorted(map(lambda i: i.strftime("%H"), available_times ))
     self.response.out.write(json.dumps(available_times))
-
-
-class ShowAvailableDoctor(BaseHandler):
-  def get(self, date):
-    if not date:
-      available_doctor = models.employee.Employee.QueryAvailableDoctor()
-      self.response.headers['Content-Type'] = 'application/json'
-      self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
-
-    else:
-      available_doctor = models.employee.Employee.QueryAvailableDoctor(date)
-      self.response.headers['Content-Type'] = 'application/json'
-      self.response.out.write(json.dumps(available_doctor.map(_json_encode_for_ndb)))
-
-  def post(self):
-    pass

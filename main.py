@@ -26,12 +26,8 @@ application = ndb.toplevel(webapp2.WSGIApplication(
     [('/', MainPage),
 
      ### /appointment/make/POST_DATA
-     #('/appointment/make/(.*)', MakeAppointment),
      ('/appointment/make/', MakeAppointment),
 
-     ### /appointment/query/doctor/DATE
-     ('/appointment/query/doctor/(.*)', ShowAvailableDoctor),
-     
      ### /appointment/query/timeline/DOCTOR/DATE
      ('/appointment/query/timeline/(.*)/(.*)', ShowAvailableTimeline),
 
@@ -41,7 +37,11 @@ application = ndb.toplevel(webapp2.WSGIApplication(
      ### mockup
      ('/mockup', MockData),
 
-     ### /snail_admin/search/patient/email/axa.cheng@gmail.com
+     ### /snail_admin/register
+     ('/snail_admin/register', Register),
+
+
+     ### /snail_admin/search/patient/email/axa@google.com
      ('/snail_admin/search/patient/(.*)/(.*)', GetPatient),
 
 

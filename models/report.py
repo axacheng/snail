@@ -13,6 +13,7 @@ class Report(polymodel.PolyModel):
   report_diagnose = ndb.TextProperty()
   report_dr_notes = ndb.TextProperty()
   report_image = ndb.BlobProperty()
+  report_side_effect = ndb.StringProperty(repeated=True)
   report_signature = ndb.StringProperty()
   report_tooth_position = ndb.StringProperty()
   report_treatment = ndb.StringProperty(repeated=True)

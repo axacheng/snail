@@ -11,7 +11,6 @@ from google.appengine.datastore.datastore_query import Cursor
 
 class Patient(ndb.Model):
   address = ndb.StringProperty(repeated=True)
-  zip_code = ndb.IntegerProperty()
   admin_notes = ndb.TextProperty()
   bill = ndb.IntegerProperty()
   blood = ndb.StringProperty()
@@ -28,29 +27,28 @@ class Patient(ndb.Model):
   phone = ndb.StringProperty(repeated=True)
   report = ndb.StructuredProperty(report.Report)
   ssn = ndb.StringProperty()
-  side_effect = ndb.StringProperty(repeated=True)
+  zip_code = ndb.StringProperty()
 
 
-  # @classmethod
-  # def AddAppointment(cls, populate_data):
-  #   appointment = Appointment(
-  #       appointment_datetime = populate_data['appointment_datetime'], 
-  #       appointment_dr_name = populate_data['appointment_dr_name'], 
-  #       appointment_status = populate_data['appointment_status'],
-  #       email = populate_data.get('email'),
-  #       name = populate_data.get('name'),
-  #       phone = populate_data.get('phone'),
-  #       ssn = populate_data.get('ssn'))
-  #   appointment.put_async()
-
-
-  # @classmethod
-  # def QueryAppointmentAvailableTimetable(cls, appointment_dr_name, appointment_datetime):
-  #   return cls.query(Appointment.appointment_dr_name == appointment_dr_name,
-  #                    Appointment.appointment_status == 'on_track', #confirmed
-  #                    Appointment.appointment_datetime >= appointment_datetime,
-  #                    Appointment.appointment_datetime < appointment_datetime + datetime.timedelta(days=1),
-  #                   ).order(-Appointment.appointment_datetime)
+  @classmethod
+  def AddPatient(cls, populate_data):
+    patient = Patient(
+      address = populate_data.get('address'),
+      admin_notes = populate_data.get('admin_notes'),
+      bill = populate_data.get('bill'),
+      blood = populate_data.get('blood'),
+      credit = populate_data.get('credit'),
+      gender = populate_data.get('gender'),
+      email = populate_data.get('email'),
+      insurance_type = populate_data.get('insurance_type'),
+      insurance_id = populate_data.get('insurance_id'),
+      name = populate_data.get('name'),
+      passport = populate_data.get('passport'),
+      patient_status = populate_data.get('patient_status'),
+      phone = populate_data.get('phone'),
+      ssn = populate_data.get('ssn'),
+      zip_code = populate_data.get('zip_code'))
+    patient.put_async()
 
 
   @classmethod
@@ -61,17 +59,10 @@ class Patient(ndb.Model):
   @classmethod
   def QueryPaitentByType(cls, search_type, search_string):
     if search_type == 'ssn':
-      return cls.query(Patient.ssn == search_string).fetch()
+      return cls.query(Patient.ssn == search_string)
 
     elif search_type == 'email':
-      return cls.query(Patient.email == search_string).fetch()
+      return cls.query(Patient.email == search_string)
 
     elif search_type == 'phone':
-      return cls.query(Patient.phone == search_string).fetch()
-
-
-# class Appointment(Patient):
-#   """docstring for Profile"""
-#   appointment_datetime = ndb.DateTimeProperty()
-#   appointment_dr_name = ndb.StringProperty()
-#   appointment_status = ndb.StringProperty()
+      return cls.query(Patient.phone == search_string)

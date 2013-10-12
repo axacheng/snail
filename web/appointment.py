@@ -24,10 +24,6 @@ import webapp2
 from google.appengine.ext import ndb
 
 
-def _json_encode_for_ndb(obj):
-    return json.dumps(obj.to_dict())
-    
-
 class MainPage(BaseHandler):
   def get(self):
     available_doctor = models.employee.Employee.QueryAvailableDoctor().fetch()

@@ -142,4 +142,41 @@ class MockData(webapp2.RequestHandler):
         models.appointment.Appointment.AddAppointment(populate_data)
 
 
+        ### Add Patient
+        populate_data ={'address':[('1600 Amphitheatre Pkwy, Mountain View, CA')],
+                        'admin_notes':'good patient',
+                        'bill': 899,
+                        'blood':'o',
+                        'credit': 80,
+                        'gender': 'male',
+                        'email': [('axa@google.com')],
+                        'insurance_type': 'social',
+                        'insurance_id': '88888888',
+                        'name': 'Axa Cheng',
+                        'passport': '273282882',
+                        'patient_status': True,
+                        'phone': [('(798) 087-9789')],
+                        'ssn': '123456789',
+                        'zip_code':'94043'}
+        models.patient.Patient.AddPatient(populate_data)
+
+        populate_data ={'address':[('1717 Harrison St San Francisco, CA')],
+                        'admin_notes':'good patient',
+                        'bill': 40,
+                        'blood':'a',
+                        'credit': 100,
+                        'gender': 'male',
+                        'email': [('georgeecheng@gmail.com')],
+                        'insurance_type': 'social',
+                        'insurance_id': '9999999',
+                        'name': 'George Cheng',
+                        'passport': '87379372',
+                        'patient_status': True,
+                        'phone': [('(123) 199-9999')],
+                        'ssn': '666',
+                        'zip_code':'94103-4226'}
+        models.patient.Patient.AddPatient(populate_data)
+
+
+
         self.redirect("/")
