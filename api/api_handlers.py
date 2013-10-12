@@ -17,11 +17,8 @@ import uuid
 from base_handler import BaseHandler
 from lib import utils
 import config
-from models.patient import *
-from models.employee import *
-
+import models
 import webapp2
-
 
 ### GAE自己的 或其他3nd party的library
 from google.appengine.ext import ndb
@@ -36,7 +33,6 @@ class GetPatientInfo(BaseHandler):
       valided_result = {'mtime':datetime(), 'uuid':121221212}
       or valided_result is False
     """
-    logging.info('tttttttt:%s', token)
 
     valided_result = utils.md5_decrypt(token)
     if not valided_result:

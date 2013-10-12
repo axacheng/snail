@@ -15,17 +15,13 @@ import uuid
 
 ### 我們自己寫的 library
 from base_handler import BaseHandler
-from lib import *
+from lib import utils
 import config
 import models
 import webapp2
 
-
 ### GAE自己的 或其他3nd party的library
 from google.appengine.ext import ndb
-import sys
-logging.info(sys.path)
-
 
 
 class GetPatient(BaseHandler):

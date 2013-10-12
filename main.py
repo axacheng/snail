@@ -6,7 +6,7 @@ import webapp2
 
 from admin.admin_handlers import *
 from api.api_handlers import *
-from lib import *
+from mockup.generate_mockup import *
 from web.appointment import *
 
 from google.appengine.ext import ndb
@@ -38,6 +38,7 @@ application = ndb.toplevel(webapp2.WSGIApplication(
      ### /api/query/token
      ('/api/query/(.*)', GetPatientInfo),
 
+     ### mockup
      ('/mockup', MockData),
 
      ### /snail_admin/search/patient/email/axa.cheng@gmail.com

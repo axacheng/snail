@@ -15,13 +15,10 @@ import uuid
 
 ### 我們自己寫的 library
 from base_handler import BaseHandler
-from lib import *
-from mockup.generate_mockup import *
+from lib import utils
 import config
-from models.employee import *
-
+import models
 import webapp2
-
 
 ### GAE自己的 或其他3nd party的library
 from google.appengine.ext import ndb
@@ -47,8 +44,6 @@ class MakeAppointment(BaseHandler):
 
   def post(self):
     form = self.request.get_all('form_data')
-    logging.info('xxxxxxxxx:%s', form)
-
     populate_data = {
       'appointment_datetime': datetime.datetime.strptime(form[1], "%Y%m%d%H"),
       'appointment_dr_name': form[0],
