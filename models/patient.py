@@ -31,26 +31,26 @@ class Patient(ndb.Model):
   side_effect = ndb.StringProperty(repeated=True)
 
 
-  @classmethod
-  def AddAppointment(cls, populate_data):
-    appointment = Appointment(
-        appointment_datetime = populate_data['appointment_datetime'], 
-        appointment_dr_name = populate_data['appointment_dr_name'], 
-        appointment_status = populate_data['appointment_status'],
-        email = populate_data.get('email'),
-        name = populate_data.get('name'),
-        phone = populate_data.get('phone'),
-        ssn = populate_data.get('ssn'))
-    appointment.put_async()
+  # @classmethod
+  # def AddAppointment(cls, populate_data):
+  #   appointment = Appointment(
+  #       appointment_datetime = populate_data['appointment_datetime'], 
+  #       appointment_dr_name = populate_data['appointment_dr_name'], 
+  #       appointment_status = populate_data['appointment_status'],
+  #       email = populate_data.get('email'),
+  #       name = populate_data.get('name'),
+  #       phone = populate_data.get('phone'),
+  #       ssn = populate_data.get('ssn'))
+  #   appointment.put_async()
 
 
-  @classmethod
-  def QueryAppointmentAvailableTimetable(cls, appointment_dr_name, appointment_datetime):
-    return cls.query(Appointment.appointment_dr_name == appointment_dr_name,
-                     Appointment.appointment_status == 'on_track', #confirmed
-                     Appointment.appointment_datetime >= appointment_datetime,
-                     Appointment.appointment_datetime < appointment_datetime + datetime.timedelta(days=1),
-                    ).order(-Appointment.appointment_datetime)
+  # @classmethod
+  # def QueryAppointmentAvailableTimetable(cls, appointment_dr_name, appointment_datetime):
+  #   return cls.query(Appointment.appointment_dr_name == appointment_dr_name,
+  #                    Appointment.appointment_status == 'on_track', #confirmed
+  #                    Appointment.appointment_datetime >= appointment_datetime,
+  #                    Appointment.appointment_datetime < appointment_datetime + datetime.timedelta(days=1),
+  #                   ).order(-Appointment.appointment_datetime)
 
 
   @classmethod
@@ -60,8 +60,6 @@ class Patient(ndb.Model):
 
   @classmethod
   def QueryPaitentByType(cls, search_type, search_string):
-    logging.info('qqqqqqqqqqq')
-    return 'xxxxxxxx'
     if search_type == 'ssn':
       return cls.query(Patient.ssn == search_string).fetch()
 
@@ -72,8 +70,8 @@ class Patient(ndb.Model):
       return cls.query(Patient.phone == search_string).fetch()
 
 
-class Appointment(Patient):
-  """docstring for Profile"""
-  appointment_datetime = ndb.DateTimeProperty()
-  appointment_dr_name = ndb.StringProperty()
-  appointment_status = ndb.StringProperty()
+# class Appointment(Patient):
+#   """docstring for Profile"""
+#   appointment_datetime = ndb.DateTimeProperty()
+#   appointment_dr_name = ndb.StringProperty()
+#   appointment_status = ndb.StringProperty()

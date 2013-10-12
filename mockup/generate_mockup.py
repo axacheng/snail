@@ -9,6 +9,7 @@ import random
 import time
 import webapp2
 
+from models.appointment import *
 from models.patient import *
 from models.employee import *
 
@@ -46,7 +47,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Axa Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 9, 0),
                          'appointment_dr_name': 'Lin',
@@ -54,7 +55,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 9, 0),
                          'appointment_dr_name': 'Lin',
@@ -62,7 +63,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 10, 0),
                          'appointment_dr_name': 'Lin',
@@ -70,7 +71,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 10, 0),
@@ -79,7 +80,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 14, 0),
                          'appointment_dr_name': 'Lin',
@@ -87,7 +88,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 14, 0),
                          'appointment_dr_name': 'Lin',
@@ -95,7 +96,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
@@ -104,7 +105,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Bibi Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
@@ -113,7 +114,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'VV Cheng',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 10, 14, 15, 0),
@@ -122,7 +123,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'JUJU',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 11, 18, 9, 0),
                          'appointment_dr_name': 'Lin',
@@ -130,7 +131,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'JUJU',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
         populate_data = {'appointment_datetime': datetime.datetime(2013, 12, 20, 9, 0),
                          'appointment_dr_name': 'Lin',
@@ -138,7 +139,7 @@ class MockData(webapp2.RequestHandler):
                          'email': [('axa.cheng@gmail.com')],
                          'name': 'Kiki',
                          'phone': [('28825252')]}
-        models.patient.Patient.AddAppointment(populate_data)
+        models.appointment.Appointment.AddAppointment(populate_data)
 
 
         self.redirect("/")

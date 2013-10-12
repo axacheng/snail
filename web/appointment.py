@@ -54,7 +54,7 @@ class MakeAppointment(BaseHandler):
       'ssn': form[3],
     }
 
-    models.patient.Patient.AddAppointment(populate_data)
+    models.appointment.Appointment.AddAppointment(populate_data)
 
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(json.dumps(form))

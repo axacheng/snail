@@ -47,7 +47,7 @@ class GetPatientInfo(BaseHandler):
 class ShowAvailableTimeline(BaseHandler):
   def get(self, doctor, date_time):
     converted_date_time = datetime.datetime.strptime(date_time, "%Y%m%d")
-    timelines = models.patient.Patient.QueryAppointmentAvailableTimetable(doctor, converted_date_time)
+    timelines = models.appointment.Appointment.QueryAppointmentAvailableTimetable(doctor, converted_date_time)
     appointments = timelines.fetch()
     appointment_times = Counter()
 
