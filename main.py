@@ -4,7 +4,10 @@ import config
 import os
 import webapp2
 
-from handlers import *
+from admin import *
+from api.api_handlers import *
+from lib import *
+from web.appointment import *
 
 from google.appengine.ext import ndb
 

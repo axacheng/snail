@@ -7,7 +7,18 @@ from google.appengine.ext.ndb import polymodel
 from google.appengine.datastore.datastore_query import Cursor
 
 
-class Patient(polymodel.PolyModel):
+class Report(polymodel.PolyModel):
+  """docstring for Profile"""
+  report_date = ndb.DateTimeProperty(auto_now_add=True)
+  report_diagnose = ndb.TextProperty()
+  report_dr_notes = ndb.TextProperty()
+  report_image = ndb.BlobProperty()
+  report_signature = ndb.StringProperty()
+  report_tooth_position = ndb.StringProperty()
+  report_treatment = ndb.StringProperty(repeated=True)
+
+
+class Patient(ndb.Model):
   address = ndb.StringProperty(repeated=True)
   zip_code = ndb.IntegerProperty()
   admin_notes = ndb.TextProperty()
@@ -24,6 +35,7 @@ class Patient(polymodel.PolyModel):
   passport = ndb.StringProperty()
   patient_status = ndb.BooleanProperty()
   phone = ndb.StringProperty(repeated=True)
+  report = ndb.StructuredProperty(Report)
   ssn = ndb.StringProperty()
   side_effect = ndb.StringProperty(repeated=True)
 
@@ -44,10 +56,16 @@ class Patient(polymodel.PolyModel):
   @classmethod
   def QueryAppointmentAvailableTimetable(cls, appointment_dr_name, appointment_datetime):
     return cls.query(Appointment.appointment_dr_name == appointment_dr_name,
-                     Appointment.appointment_status == 'on_track',
+                     Appointment.appointment_status == 'on_track', #confirmed
                      Appointment.appointment_datetime >= appointment_datetime,
                      Appointment.appointment_datetime < appointment_datetime + datetime.timedelta(days=1),
                     ).order(-Appointment.appointment_datetime)
+
+
+
+  @classmethod
+  def QueryPaitentByUuid(cls, uuid):
+    return cls.query(User.dr_status == 'Working')
 
 
 class Appointment(Patient):
@@ -57,18 +75,8 @@ class Appointment(Patient):
   appointment_status = ndb.StringProperty()
 
 
-class Report(Patient):
-  """docstring for Profile"""
-  report_date = ndb.DateTimeProperty(auto_now_add=True)
-  report_diagnose = ndb.TextProperty()
-  report_dr_notes = ndb.TextProperty()
-  report_image = ndb.BlobProperty()
-  report_signature = ndb.StringProperty()
-  report_tooth_position = ndb.StringProperty()
-  report_treatment = ndb.StringProperty(repeated=True)
 
-
-class User(polymodel.PolyModel):
+class Employee(polymodel.PolyModel):
   dr_description = ndb.TextProperty()
   dr_major = ndb.StringProperty()
   dr_name = ndb.StringProperty()
@@ -76,17 +84,14 @@ class User(polymodel.PolyModel):
 
 
   @classmethod
-  def AddUser(cls, populate_data):
-    user = User(dr_description = populate_data['dr_description'],
-                dr_major = populate_data['dr_major'],
-                dr_name = populate_data['dr_name'],
-                dr_status = populate_data['dr_status'])
-    user.put()
+  def AddEmployee(cls, populate_data):
+    employee = Employee(dr_description = populate_data['dr_description'],
+                        dr_major = populate_data['dr_major'],
+                        dr_name = populate_data['dr_name'],
+                        dr_status = populate_data['dr_status'])
+    employee.put()
 
 
   @classmethod
   def QueryAvailableDoctor(cls, date=None):
-    return cls.query(User.dr_status == 'Working')
-
-
-
+    return cls.query(Employee.dr_status == 'Working')

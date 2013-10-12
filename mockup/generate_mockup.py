@@ -16,24 +16,24 @@ from google.appengine.ext.webapp import template
 class MockData(webapp2.RequestHandler):
     @ndb.toplevel
     def get(self):
-        ### Add User ###
+        ### Add Employee ###
         populate_data = {'dr_description': 'General Medicine',
                          'dr_major': 'dental',
                          'dr_name': 'Lin',
                          'dr_status': 'Working'}
-        models.User.AddUser(populate_data)
+        models.Employee.AddEmployee(populate_data)
 
         populate_data = {'dr_description': 'Paediatrics',
                          'dr_major': 'paediatrics',
                          'dr_name': 'Cheng',
                          'dr_status': 'Working'}
-        models.User.AddUser(populate_data)
+        models.Employee.AddEmployee(populate_data)
 
         populate_data = {'dr_description': 'Trauma and Orthopaedics',
                          'dr_major': 'trauma and orthopaedics',
                          'dr_name': 'Axa',
                          'dr_status': 'On Leave'}
-        models.User.AddUser(populate_data)
+        models.Employee.AddEmployee(populate_data)
         
 
         ### Add Appointment ###
@@ -136,13 +136,6 @@ class MockData(webapp2.RequestHandler):
                          'name': 'Kiki',
                          'phone': [('28825252')]}
         models.Patient.AddAppointment(populate_data)
-
-
-
-
-
-
-
 
 
         self.redirect("/")
