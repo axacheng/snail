@@ -37,8 +37,11 @@ application = ndb.toplevel(webapp2.WSGIApplication(
      ### mockup
      ('/mockup', MockData),
 
-     ### /snail_admin/register
-     ('/snail_admin/register', Register),
+     ### /snail_admin
+     ('/snail_admin', MainAdmin),
+
+     ### /snail_admin/appointment/modify/urlsafe_entity_key/appointment_status/value
+     ('/snail_admin/appointment/modify/(.*)/(.*)/(.*)', ModifyAppointment),
 
 
      ### /snail_admin/search/patient/email/axa@google.com

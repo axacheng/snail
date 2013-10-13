@@ -36,8 +36,23 @@ class GetPatient(BaseHandler):
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(json.dumps(patient.map(_json_encode_for_ndb)))
 
+class GetAppointment(BaseHandler):
+	pass
 
-class Register(BaseHandler):
+class ModifyAppointment(BaseHandler):
+  def post(self, entity_key, modify_type, value):
+  	models.appointment.Appointment.EditAppointment(entity_key, modify_type, value)
+
+
+class MainAdmin(BaseHandler):
   def get(self):
-    template_dict = {'patient': 'patient'}
-    self.render_template('register.html', template_dict)
+  	appointments = models.appointment.Appointment.QueryAppointment()
+  	template_dict = {'appointments': appointments.fetch()}
+  	self.render_template('admin_main.html', template_dict)
+
+
+
+ 
+
+
+

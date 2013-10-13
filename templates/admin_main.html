@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title> Main - Snail </title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	    <link href="/static/css/snail-flatui.css" rel="stylesheet" media="screen">
+	    <script src="/static/js/jquery-1.10.2.min.js"></script>
+			<script src="/static/js/jquery-ui.min.js"></script>
+			<script src="/static/js/jquery.blockUI.js"></script>
+			<script src="/static/js/bootstrap.min.js"></script>
+			<script src="/static/js/bootstrap-formhelpers-phone.format.js"></script>
+			<script src="/static/js/bootstrap-formhelpers-phone.js"></script>
+	</head>
+	<body>
+		<header>
+			<div class="navbar">
+				<span class="navbar-brand">
+					"@ Snail
+				</span>
+				<span class="nav">
+					<label class="btn btn-special1">Call 1-xxx-xxxxxxx </label>
+				</span>
+			</div>
+		</header>
+		<div class="container-fluid">
+			<div class="row-fluid mvxll" id="appointment_list">
+			  	<h2> Appointment </h2>
+			  	<input type="text" class="search_string" value="" placeholder="search" />
+			  	<button type="submit" class="btn btn-primary search_patient"> Search </button>
+			  	<div class="span5">
+			  	{% for appointment in appointments|sort(attribute='appointment_datetime') %}
+			  		Date:{{ appointment.appointment_datetime }}
+			  		Name:{{ appointment.name }}
+			  		Phone:{{ appointment.phone }}
+			  		State:{{ appointment.appointment_status }}
+			  		<div class="dropdown state" id="{{ appointment.key.urlsafe() }}">
+			  			<select class="select-block">
+			  				{% if appointment.appointment_status == 'call' %}
+							  	<option value="call" selected="">Call</option>
+									<option value="confirmed">Confirmed</option>
+									<option value="cancelled">Cancelled</option>
+							  	<option value="show">Show</option>
+
+							  {% elif appointment.appointment_status == 'confirmed' %}
+							  	<option value="call">Call</option>
+									<option value="confirmed" selected="">Confirmed</option>
+									<option value="cancelled">Cancelled</option>
+							  	<option value="show">Show</option>
+
+							  {% elif appointment.appointment_status == 'cancelled' %}
+							  	<option value="call">Call</option>
+									<option value="confirmed">Confirmed</option>
+									<option value="cancelled" selected="">Cancelled</option>
+							  	<option value="show">Show</option>
+
+							  {% else %}
+							  	<option value="call">Call</option>
+									<option value="confirmed">Confirmed</option>
+									<option value="cancelled">Cancelled</option>
+							  	<option value="show" selected="">Show</option>
+							  {% endif %}
+							</select>
+
+			  		<br>
+			  	{% endfor %}
+			  </div> <!-- span5 -->
+			</div> <!-- row-fluid -->
+		</div> <!-- container-fluid -->
+
+		<script type="text/javascript">
+			$( document ).ready(function() {
+
+				// Modify Appointment state
+				$('select').change(function() {
+    			var entity_key = $(this).parent().attr('id')
+    			var state = $(this).val()
+
+					url = '/snail_admin/appointment/modify/' + entity_key + '/appointment_status/' + state
+
+					$.post(url)
+
+				}) // .change end
+			}); // document ready end
+		</script>
+
+	</body>
+	<footer>
+	</footer>
+</html>
+
+

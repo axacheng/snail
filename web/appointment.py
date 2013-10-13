@@ -43,7 +43,7 @@ class MakeAppointment(BaseHandler):
     populate_data = {
       'appointment_datetime': datetime.datetime.strptime(form[1], "%Y%m%d%H"),
       'appointment_dr_name': form[0],
-      'appointment_status': 'on_track',
+      'appointment_status': 'call',
       'email': [(form[5])],
       'name': form[2],
       'phone': [(form[4])],

@@ -34,9 +34,27 @@ class Appointment(ndb.Model):
 
 
   @classmethod
+  def EditAppointment(cls, entity_key, modify_type, populate_data):
+    appointment_id = ndb.Key(urlsafe=entity_key)
+    appointment_entity = appointment_id.get()
+    if modify_type == 'appointment_status':
+      appointment_entity.populate(
+        appointment_status = populate_data)
+    
+    this_key = appointment_entity.put()
+    logging.info('Key:[ %s ] got modified' % (this_key))
+
+
+
+  @classmethod
+  def QueryAppointment(cls):
+    return cls.query()
+
+
+  @classmethod
   def QueryAppointmentAvailableTimetable(cls, appointment_dr_name, appointment_datetime):
     return cls.query(Appointment.appointment_dr_name == appointment_dr_name,
-                     Appointment.appointment_status == 'on_track', #confirmed
+                     Appointment.appointment_status == 'call', #confirmed
                      Appointment.appointment_datetime >= appointment_datetime,
                      Appointment.appointment_datetime < appointment_datetime + datetime.timedelta(days=1),
                     ).order(-Appointment.appointment_datetime)
