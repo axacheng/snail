@@ -20,11 +20,12 @@
 					"@ Snail
 				</span>
 				<span class="nav">
-					<label class="btn btn-special1">Call 1-xxx-xxxxxxx </label>
+					<div id="modify_tag">OK</div>
 				</span>
 			</div>
 		</header>
 		<div class="container-fluid">
+
 			<div class="row-fluid mvxll" id="appointment_list">
 			  	<h2> Appointment </h2>
 			  	<input type="text" class="search_string" value="" placeholder="search" />
@@ -72,6 +73,9 @@
 		<script type="text/javascript">
 			$( document ).ready(function() {
 
+				// modify_tag
+				$('#modify_tag').hide()
+
 				// Modify Appointment state
 				$('select').change(function() {
     			var entity_key = $(this).parent().attr('id')
@@ -79,7 +83,14 @@
 
 					url = '/snail_admin/appointment/modify/' + entity_key + '/appointment_status/' + state
 
-					$.post(url)
+					var modify_appointment_result = $.post(url)
+					modify_appointment_result.done(function(data){
+						$('.navbar').effect('highlight', {color: '#66DD88'}, 2000)
+					})
+
+					modify_appointment_result.fail(function(data){
+						$('.navbar').effect('highlight', {color: 'red'}, 2000)
+					})
 
 				}) // .change end
 			}); // document ready end

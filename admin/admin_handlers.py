@@ -42,6 +42,7 @@ class GetAppointment(BaseHandler):
 class ModifyAppointment(BaseHandler):
   def post(self, entity_key, modify_type, value):
   	models.appointment.Appointment.EditAppointment(entity_key, modify_type, value)
+  	#self.error(500)
 
 
 class MainAdmin(BaseHandler):
