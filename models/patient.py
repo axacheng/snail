@@ -55,14 +55,44 @@ class Patient(ndb.Model):
   def QueryPaitentByUuid(cls, uuid):
     return cls.query(User.dr_status == 'Working')
 
-
   @classmethod
-  def QueryPaitentByType(cls, search_type, search_string):
-    if search_type == 'ssn':
-      return cls.query(Patient.ssn == search_string)
+  def QueryPaitent(cls, search_string):
+    result = cls.query(Patient.name == search_string).fetch()
+    if result:
+      logging.info('name')
+      return result
 
-    elif search_type == 'email':
-      return cls.query(Patient.email == search_string)
+    while not result:
+      logging.info('Going to try various searchs')
+      result = cls.query(Patient.email == search_string).fetch()
+      
+      if result:
+        logging.info('email:%s', result)
+        return result
 
-    elif search_type == 'phone':
-      return cls.query(Patient.phone == search_string)
+      result = cls.query(Patient.ssn == search_string).fetch()
+      if result:
+        logging.info('ssn:%s', result)
+        return result
+
+      result = cls.query(Patient.phone == search_string).fetch()
+      if result:
+        logging.info('phone:%s', result)
+        return result
+
+      else:
+        logging.info('we cant get anything')
+        return result
+    
+
+
+  # @classmethod
+  # def QueryPaitentByType(cls, search_type, search_string):
+  #   if search_type == 'ssn':
+  #     return cls.query(Patient.ssn == search_string)
+
+  #   elif search_type == 'email':
+  #     return cls.query(Patient.email == search_string)
+
+  #   elif search_type == 'phone':
+  #     return cls.query(Patient.phone == search_string)

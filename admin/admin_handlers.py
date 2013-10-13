@@ -5,7 +5,7 @@ from collections import Counter
 from collections import defaultdict
 from collections import OrderedDict
 
-import datetime
+from datetime import datetime, date, time
 import jinja2
 import json
 import logging
@@ -22,19 +22,30 @@ import webapp2
 
 ### GAE自己的 或其他3nd party的library
 from google.appengine.ext import ndb
+from google.appengine.ext import db
 
 
-def _json_encode_for_ndb(obj):
-    return json.dumps(obj.to_dict())
+class JSONEncoder(json.JSONEncoder):
+  def default(self, o):
+    # If this is a key, you might want to grab the actual model.
+    if isinstance(o, ndb.Key):
+        o = db.get(o)
+
+    if isinstance(o, ndb.Model):
+        return o.to_dict()
+
+    elif isinstance(o, (datetime, date, time)):
+        return str(o)  # Or whatever other date format you're OK with...
 
 
 class GetPatient(BaseHandler):
-  def get(self, search_type, search_string):
-    patient = models.patient.Patient.QueryPaitentByType(search_type, search_string)
-    logging.info(patient)
+  def get(self, search_string):
+    patient = models.patient.Patient.QueryPaitent(search_string)
+    patient_json = JSONEncoder().encode(patient)
 
     self.response.headers['Content-Type'] = 'application/json'
-    self.response.out.write(json.dumps(patient.map(_json_encode_for_ndb)))
+    self.response.out.write(patient_json)
+
 
 class GetAppointment(BaseHandler):
 	pass

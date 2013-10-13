@@ -26,57 +26,102 @@
 		</header>
 		<div class="container-fluid">
 
-			<div class="row-fluid mvxll" id="appointment_list">
-			  	<h2> Appointment </h2>
-			  	<input type="text" class="search_string" value="" placeholder="search" />
-			  	<button type="submit" class="btn btn-primary search_patient"> Search </button>
-			  	<div class="span5">
-			  	{% for appointment in appointments|sort(attribute='appointment_datetime') %}
-			  		Date:{{ appointment.appointment_datetime }}
-			  		Name:{{ appointment.name }}
-			  		Phone:{{ appointment.phone }}
-			  		State:{{ appointment.appointment_status }}
-			  		<div class="dropdown state" id="{{ appointment.key.urlsafe() }}">
-			  			<select class="select-block">
-			  				{% if appointment.appointment_status == 'call' %}
-							  	<option value="call" selected="">Call</option>
-									<option value="confirmed">Confirmed</option>
-									<option value="cancelled">Cancelled</option>
-							  	<option value="show">Show</option>
+			<div class="row-fluid mvxll">
+		
+				<div class="tabbable"> <!-- Only required for left/right tabs -->
+				  <ul class="nav nav-tabs">
+				    <li><a href="#appointment" data-toggle="tab">Appointment</a></li>
+				    <li class="active"><a href="#register" data-toggle="tab">Register</a></li>
+				    <li><a href="#tracking" data-toggle="tab">Tracking</a></li>
+				  </ul>
 
-							  {% elif appointment.appointment_status == 'confirmed' %}
-							  	<option value="call">Call</option>
-									<option value="confirmed" selected="">Confirmed</option>
-									<option value="cancelled">Cancelled</option>
-							  	<option value="show">Show</option>
+				  <div class="tab-content">
+				  	<!-- Appointment -->
+				  	<div class="tab-pane span5" id="appointment">
+				      <p>I'm in Appointment</p>
+					  	{% for appointment in appointments|sort(attribute='appointment_datetime') %}
+					  		Date:{{ appointment.appointment_datetime }}
+					  		Name:{{ appointment.name }}
+					  		Phone:{{ appointment.phone }}
+					  		State:{{ appointment.appointment_status }}
+					  		<div class="dropdown state" id="{{ appointment.key.urlsafe() }}">
+					  			<select class="select-block">
+					  				{% if appointment.appointment_status == 'call' %}
+									  	<option value="call" selected="">Call</option>
+											<option value="confirmed">Confirmed</option>
+											<option value="cancelled">Cancelled</option>
+									  	<option value="show">Show</option>
 
-							  {% elif appointment.appointment_status == 'cancelled' %}
-							  	<option value="call">Call</option>
-									<option value="confirmed">Confirmed</option>
-									<option value="cancelled" selected="">Cancelled</option>
-							  	<option value="show">Show</option>
+									  {% elif appointment.appointment_status == 'confirmed' %}
+									  	<option value="call">Call</option>
+											<option value="confirmed" selected="">Confirmed</option>
+											<option value="cancelled">Cancelled</option>
+									  	<option value="show">Show</option>
 
-							  {% else %}
-							  	<option value="call">Call</option>
-									<option value="confirmed">Confirmed</option>
-									<option value="cancelled">Cancelled</option>
-							  	<option value="show" selected="">Show</option>
-							  {% endif %}
-							</select>
+									  {% elif appointment.appointment_status == 'cancelled' %}
+									  	<option value="call">Call</option>
+											<option value="confirmed">Confirmed</option>
+											<option value="cancelled" selected="">Cancelled</option>
+									  	<option value="show">Show</option>
 
-			  		<br>
-			  	{% endfor %}
-			  </div> <!-- span5 -->
+									  {% else %}
+									  	<option value="call">Call</option>
+											<option value="confirmed">Confirmed</option>
+											<option value="cancelled">Cancelled</option>
+									  	<option value="show" selected="">Show</option>
+									  {% endif %}
+									</select>
+								</div>
+					  		<br>
+					  	{% endfor %}
+				  	</div> <!-- appointment end -->
+
+				  	<!-- Register -->
+				  	<div class="tab-pane span5 active" id="register">
+				      <p>Register</p>
+				      <form action="/snail_admin/search/patient/" method="POST">
+					      <input id="query_patient_input" type="text" value="" placeholder="search" />
+				  			<button id="query_patient_button" type="submit" class="btn btn-primary"> Search </button>
+			  			</form>
+
+			  			<div id="patient_info"></div> <!-- patient_info end -->
+			  			<div id="register_form"><h2>Registe Application</h2>
+								<form class="form-horizontal">
+								  <div class="control-group">
+								    <label class="control-label" for="inputEmail">Email</label>
+								    <div class="controls">
+								      <input type="text" id="inputEmail" placeholder="Email">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								    <label class="control-label" for="inputPassword">Name</label>
+								    <div class="controls">
+								      <input type="text" id="inputPassword" placeholder="Name">
+								    </div>
+								  </div>
+								  <div class="control-group">
+								      <button type="submit" class="btn">New Patient</button>
+								  </div>
+								</form>
+			  			</div> <!-- register_form end -->
+				    </div> <!-- register end -->
+
+				    <!-- Tracking -->
+				  	<div class="tab-pane span5" id="tracking">
+				      <p>Tracking</p>
+				    </div> <!-- tracking end -->
+				  </div> <!-- tab-content -->
+				</div> <!-- tabbable end -->
 			</div> <!-- row-fluid -->
 		</div> <!-- container-fluid -->
 
 		<script type="text/javascript">
 			$( document ).ready(function() {
 
-				// modify_tag
+				// (Appointment) modify_tag
 				$('#modify_tag').hide()
 
-				// Modify Appointment state
+				// (Appointment) Modify Appointment state
 				$('select').change(function() {
     			var entity_key = $(this).parent().attr('id')
     			var state = $(this).val()
@@ -93,6 +138,44 @@
 					})
 
 				}) // .change end
+
+				// (Register)
+				$('#register_form').hide()
+
+				$('#register').on('click', '#query_patient_button', function(){
+			  	event.preventDefault();
+			  	var search_string = $('#query_patient_input').val()
+			  	var textToInsert = ''
+
+			  	$.ajax({
+			  		url: "/snail_admin/search/patient/" + search_string,
+			  		type: "GET",
+			  		dataType: 'json',
+			  		success: function(response_json){
+			  			if (response_json.length >= 1) {
+			  				$('#patient_info').empty()
+								$('#register_form').hide()
+			  				$('#patient_info').show()
+
+								$.each(response_json, function(index, value){
+			  					textToInsert += '<p>'+ value.name + '</p>'
+			  					textToInsert += '<p>'+ value.email + '</p>'
+			  					textToInsert += '<p>'+ value.ssn + '</p>'
+			  					textToInsert += '<p>'+ value.phone + '</p>'
+			  				
+			  				$('#patient_info').append(textToInsert)
+			  				}) // .each end
+			  			} // if response_json.length end
+			  			
+			  			else {
+			  				// Show register form for new patient
+			  				$('#patient_info').hide()
+								$('#register_form').show()
+			  			}
+			  		}, // success end
+			  	}) // .ajax end
+				}) // .click end
+
 			}); // document ready end
 		</script>
 
