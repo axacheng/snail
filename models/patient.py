@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import logging
+import uuid
 
 import report
 
@@ -16,14 +17,15 @@ class Patient(ndb.Model):
   blood = ndb.StringProperty()
   credit = ndb.IntegerProperty()
   gender = ndb.StringProperty()
+  driver_license = ndb.StringProperty()
   date_created_this_patient = ndb.DateTimeProperty(auto_now_add=True)
   date_last_updated = ndb.DateTimeProperty(auto_now=True)
   email = ndb.StringProperty(repeated=True)
   insurance_type = ndb.StringProperty()
   insurance_id = ndb.StringProperty()
-  name = ndb.StringProperty()
+  name = ndb.StringProperty(repeated=True)
   passport = ndb.StringProperty()
-  patient_status = ndb.BooleanProperty()
+  patient_status = ndb.StringProperty()
   phone = ndb.StringProperty(repeated=True)
   report = ndb.StructuredProperty(report.Report)
   ssn = ndb.StringProperty()
@@ -33,10 +35,12 @@ class Patient(ndb.Model):
   @classmethod
   def AddPatient(cls, populate_data):
     patient = Patient(
+      id = populate_data.get('id'),
       address = populate_data.get('address'),
       admin_notes = populate_data.get('admin_notes'),
       bill = populate_data.get('bill'),
       blood = populate_data.get('blood'),
+      driver_license = populate_data.get('driver_license'),
       credit = populate_data.get('credit'),
       gender = populate_data.get('gender'),
       email = populate_data.get('email'),
@@ -48,12 +52,26 @@ class Patient(ndb.Model):
       phone = populate_data.get('phone'),
       ssn = populate_data.get('ssn'),
       zip_code = populate_data.get('zip_code'))
-    patient.put_async()
+    
+    fut = patient.put_async()
+    return fut.get_result()
+
+
+  @classmethod
+  def EditPatient(cls, modify_type, patient_uuid, populate_data):
+    patient_entity = cls.get_by_id(patient_uuid)
+    
+    if modify_type == 'patient_status':
+      patient_entity.populate(
+        patient_status = populate_data.get('patient_status'))
+    
+    this_key = patient_entity.put()
 
 
   @classmethod
   def QueryPaitentByUuid(cls, uuid):
     return cls.query(User.dr_status == 'Working')
+
 
   @classmethod
   def QueryPaitent(cls, search_string):

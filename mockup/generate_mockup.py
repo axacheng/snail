@@ -152,9 +152,9 @@ class MockData(webapp2.RequestHandler):
                         'email': [('axa@google.com')],
                         'insurance_type': 'social',
                         'insurance_id': '88888888',
-                        'name': 'Axa Cheng',
+                        'name': ['Axa', 'Cheng'],
                         'passport': '273282882',
-                        'patient_status': True,
+                        'patient_status': 'baby',
                         'phone': [('(798) 087-9789')],
                         'ssn': '123456789',
                         'zip_code':'94043'}
@@ -169,9 +169,9 @@ class MockData(webapp2.RequestHandler):
                         'email': [('georgeecheng@gmail.com')],
                         'insurance_type': 'social',
                         'insurance_id': '9999999',
-                        'name': 'George Cheng',
+                        'name': ['George', 'Cheng'],
                         'passport': '87379372',
-                        'patient_status': True,
+                        'patient_status': 'baby',
                         'phone': [('(123) 199-9999')],
                         'ssn': '666',
                         'zip_code':'94103-4226'}

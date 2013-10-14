@@ -45,7 +45,6 @@ class Appointment(ndb.Model):
     logging.info('Key:[ %s ] got modified' % (this_key))
 
 
-
   @classmethod
   def QueryAppointment(cls):
     return cls.query()

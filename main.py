@@ -44,8 +44,13 @@ application = ndb.toplevel(webapp2.WSGIApplication(
      ('/snail_admin/appointment/modify/(.*)/(.*)/(.*)', ModifyAppointment),
 
      ### /snail_admin/search/patient/email/axa@google.com
-     #('/snail_admin/search/patient/(.*)/(.*)', GetPatient),
      ('/snail_admin/search/patient/(.*)', GetPatient),
+
+     ### /snail_admin/modify/patient/check_in/patient_uuid
+     ('/snail_admin/modify/patient/check_in/(.*)', ModifyPatientCheckIn),
+
+     ### /snail_admin/create/patient
+     ('/snail_admin/create/patient', AddPatient),
 
 
     ],

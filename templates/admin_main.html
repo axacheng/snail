@@ -79,25 +79,35 @@
 				  	<div class="tab-pane span12 active" id="register">
 				      <p>Register</p>
 				      <form action="/snail_admin/search/patient/" method="POST">
-					      <input id="query_patient_input" type="text" value="" placeholder="search" />
+					      <input class="input-small" id="query_patient_input" type="text" value="" placeholder="first name, email, ssn, phone" />
 				  			<button id="query_patient_button" type="submit" class="btn btn-primary"> Search </button>
 			  			</form>
 
-			  			<div id="patient_info"></div> <!-- patient_info end -->
-			  			<div id="register_form"><h2>Registe Application</h2>
-								<form class="form-horizontal">
+			  			<div id="patient_info">
+					      <form id="patient_checkin_form" action="/snail_admin/modify/patient/check_in/" method="POST">
+					  			<button id="check_in" type="submit" class="btn btn-primary"> Patient Check-In </button>
+				  			</form>			  				
 
-								  <div class="control-group">
-								    <label class="control-label" for="inputPassword">Name</label>
-								    <div class="controls">
-								      <input type="text" id="inputPassword" placeholder="Name">
-								    </div>
+			  			</div> <!-- patient_info end -->
+			  			<div id="register_form"><h2>Registe Application</h2>
+								<form action="/snail_admin/create/patient" method="POST" class="form-horizontal">
+
+
+								  <div class="form-inline">
+									  <div class="control-group">
+									    <label class="control-label" for="inputName">Name</label>
+									    <div class="controls">
+									      <input type="text" id="inputName" name="first_name" placeholder="First">
+									      <input type="text" id="inputName" name="middle_name" placeholder="Middle">
+									      <input type="text" id="inputName" name="last_name" placeholder="Last">
+									  	</div>
+								  	</div>
 								  </div>
 
 								  <div class="control-group">
 								    <label class="control-label" for="inputEmail">Email</label>
 								    <div class="controls">
-								      <input type="text" id="inputEmail" placeholder="Email Address">
+								      <input type="email" id="inputEmail" name="email" placeholder="Email Address">
 								    </div>
 								  </div>
 
@@ -105,8 +115,8 @@
 									  <div class="control-group">
 									    <label class="control-label" for="inputAddress">Address</label>
 									    <div class="controls">
-									      <input type="text" id="inputAddress" placeholder="Home Address">
-									      <input type="text" id="inputAddress" placeholder="Zip Code">
+									      <input type="text" id="inputAddress" name="address" placeholder="Home Address">
+									      <input type="text" id="inputAddress" name="zip_code" placeholder="Zip Code">
 									  	</div>
 								  	</div>
 								  </div>
@@ -115,8 +125,8 @@
 									  <div class="control-group">
 								    	<label class="control-label" for="inputPhone">Phone</label>
 								    	<div class="controls">
-							    	  	<input type="text" id="inputPhone" placeholder="Phone Primary">
-							  				<input type="text" id="inputPhone" placeholder="Phone Secondary">
+							    	  	<input class="form-control input-hg bfh-phone" data-country="US" type="text" id="inputPhone" name="phone_primary" placeholder="Phone Primary">
+							  				<input class="form-control input-hg bfh-phone" data-country="US" type="text" id="inputPhone" name="phone_secondary" placeholder="Phone Secondary">
 							  			</div>
 								  	</div>
 								  </div>
@@ -124,49 +134,49 @@
 								  <div class="control-group">
 								    <label class="control-label" for="inputBirthday">Birthday</label>
 								    <div class="controls">
-								      <input type="text" id="inputBirthday" placeholder="Birthday">
+								      <input type="text" id="inputBirthday" name="birthday" placeholder="Birthday">
 								    </div>
 								  </div>
 								  
 								  <div class="control-group">
 								    <label class="control-label" for="inputBlood">Blood</label>
 								    <div class="controls">
-								      <input type="text" id="inputBlood" placeholder="Blood Type">
+								      <input type="text" id="inputBlood" name="blood" placeholder="Blood Type">
 								    </div>
 								  </div>
 								  
 								  <div class="control-group">
 								    <label class="control-label" for="inputGender">Gender</label>
 								    <div class="controls">
-								      <input type="text" id="inputGender" placeholder="Gender">
+								      <input type="text" id="inputGender" name="gender" placeholder="Gender">
 								    </div>
 								  </div>
 								  
 								  <div class="control-group">
 								    <label class="control-label" for="inputSSN">SSN</label>
 								    <div class="controls">
-								      <input type="text" id="inputSSN" placeholder="SSN">
+								      <input type="text" id="inputSSN" name="ssn" placeholder="SSN">
 								    </div>
 								  </div>
 								  
 								  <div class="control-group">
 								    <label class="control-label" for="inputDriverLicense">Driver License</label>
 								    <div class="controls">
-								      <input type="text" id="inputDriverLicense" placeholder="Driver License">
+								      <input type="text" id="inputDriverLicense" name="driver_license" placeholder="Driver License">
 								    </div>
 								  </div>
 
 								  <div class="control-group">
 								    <label class="control-label" for="inputInsuranceType">Insurance Type</label>
 								    <div class="controls">
-								      <input type="text" id="inputInsuranceType" placeholder="Insurance Type">
+								      <input type="text" id="inputInsuranceType" name="insurance_type" placeholder="Insurance Type">
 								    </div>
 								  </div>
 
 								  <div class="control-group">
 								    <label class="control-label" for="inputInsuranceID">Insurance ID</label>
 								    <div class="controls">
-								      <input type="text" id="inputInsuranceID" placeholder="Insurance ID">
+								      <input type="text" id="inputInsuranceID" name="insurance_id" placeholder="Insurance ID">
 								    </div>
 								  </div>
 	
@@ -224,11 +234,13 @@
 			  		dataType: 'json',
 			  		success: function(response_json){
 			  			if (response_json.length >= 1) {
-			  				$('#patient_info').empty()
+			  				//$('#patient_info').empty()
 								$('#register_form').hide()
 			  				$('#patient_info').show()
 
 								$.each(response_json, function(index, value){
+									console.log(value)
+			  					textToInsert += '<p id="patient_uuid">'+ value.patient_uuid + '</p>'
 			  					textToInsert += '<p>'+ value.name + '</p>'
 			  					textToInsert += '<p>'+ value.email + '</p>'
 			  					textToInsert += '<p>'+ value.ssn + '</p>'
@@ -246,6 +258,18 @@
 			  		}, // success end
 			  	}) // .ajax end
 				}) // .click end
+
+				// check_in click
+				$('#patient_checkin_form').on('click', '#check_in', function(){
+			  	event.preventDefault();
+			  	var url = $('#patient_checkin_form').attr('action')
+			  	var patient_uuid = $('#patient_uuid').text()
+			  	
+					$.post(url+patient_uuid)
+
+					// TODO, need to give admin a heads up after check state to 'check_in'
+
+				})
 
 			}); // document ready end
 		</script>
