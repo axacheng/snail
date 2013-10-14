@@ -26,16 +26,20 @@ from google.appengine.ext import db
 
 
 class JSONEncoder(json.JSONEncoder):
+  """
+  This JSONEncoder is provided from:
+  http://stackoverflow.com/questions/13311363/appengine-making-ndb-models-json-serializable
+  """
   def default(self, o):
     # If this is a key, you might want to grab the actual model.
     if isinstance(o, ndb.Key):
-        o = db.get(o)
+      o = db.get(o)
 
     if isinstance(o, ndb.Model):
-        return o.to_dict()
+      return o.to_dict()
 
     elif isinstance(o, (datetime, date, time)):
-        return str(o)  # Or whatever other date format you're OK with...
+      return str(o)  # Or whatever other date format you're OK with...
 
 
 class GetPatient(BaseHandler):
@@ -48,19 +52,19 @@ class GetPatient(BaseHandler):
 
 
 class GetAppointment(BaseHandler):
-	pass
+  pass
 
 class ModifyAppointment(BaseHandler):
   def post(self, entity_key, modify_type, value):
-  	models.appointment.Appointment.EditAppointment(entity_key, modify_type, value)
-  	#self.error(500)
+    models.appointment.Appointment.EditAppointment(entity_key, modify_type, value)
+    #self.error(500)
 
 
 class MainAdmin(BaseHandler):
   def get(self):
-  	appointments = models.appointment.Appointment.QueryAppointment()
-  	template_dict = {'appointments': appointments.fetch()}
-  	self.render_template('admin_main.html', template_dict)
+    appointments = models.appointment.Appointment.QueryAppointment()
+    template_dict = {'appointments': appointments.fetch()}
+    self.render_template('admin_main.html', template_dict)
 
 
 
