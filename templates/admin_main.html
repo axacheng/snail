@@ -38,7 +38,6 @@
 				  <div class="tab-content">
 				  	<!-- Appointment -->
 				  	<div class="tab-pane span5" id="appointment">
-				      <p>I'm in Appointment</p>
 					  	{% for appointment in appointments|sort(attribute='appointment_datetime') %}
 					  		Date:{{ appointment.appointment_datetime }}
 					  		Name:{{ appointment.name }}
@@ -77,7 +76,7 @@
 				  	</div> <!-- appointment end -->
 
 				  	<!-- Register -->
-				  	<div class="tab-pane span5 active" id="register">
+				  	<div class="tab-pane span12 active" id="register">
 				      <p>Register</p>
 				      <form action="/snail_admin/search/patient/" method="POST">
 					      <input id="query_patient_input" type="text" value="" placeholder="search" />
@@ -87,18 +86,90 @@
 			  			<div id="patient_info"></div> <!-- patient_info end -->
 			  			<div id="register_form"><h2>Registe Application</h2>
 								<form class="form-horizontal">
-								  <div class="control-group">
-								    <label class="control-label" for="inputEmail">Email</label>
-								    <div class="controls">
-								      <input type="text" id="inputEmail" placeholder="Email">
-								    </div>
-								  </div>
+
 								  <div class="control-group">
 								    <label class="control-label" for="inputPassword">Name</label>
 								    <div class="controls">
 								      <input type="text" id="inputPassword" placeholder="Name">
 								    </div>
 								  </div>
+
+								  <div class="control-group">
+								    <label class="control-label" for="inputEmail">Email</label>
+								    <div class="controls">
+								      <input type="text" id="inputEmail" placeholder="Email Address">
+								    </div>
+								  </div>
+
+								  <div class="form-inline">
+									  <div class="control-group">
+									    <label class="control-label" for="inputAddress">Address</label>
+									    <div class="controls">
+									      <input type="text" id="inputAddress" placeholder="Home Address">
+									      <input type="text" id="inputAddress" placeholder="Zip Code">
+									  	</div>
+								  	</div>
+								  </div>
+
+								  <div class="form-inline">
+									  <div class="control-group">
+								    	<label class="control-label" for="inputPhone">Phone</label>
+								    	<div class="controls">
+							    	  	<input type="text" id="inputPhone" placeholder="Phone Primary">
+							  				<input type="text" id="inputPhone" placeholder="Phone Secondary">
+							  			</div>
+								  	</div>
+								  </div>
+
+								  <div class="control-group">
+								    <label class="control-label" for="inputBirthday">Birthday</label>
+								    <div class="controls">
+								      <input type="text" id="inputBirthday" placeholder="Birthday">
+								    </div>
+								  </div>
+								  
+								  <div class="control-group">
+								    <label class="control-label" for="inputBlood">Blood</label>
+								    <div class="controls">
+								      <input type="text" id="inputBlood" placeholder="Blood Type">
+								    </div>
+								  </div>
+								  
+								  <div class="control-group">
+								    <label class="control-label" for="inputGender">Gender</label>
+								    <div class="controls">
+								      <input type="text" id="inputGender" placeholder="Gender">
+								    </div>
+								  </div>
+								  
+								  <div class="control-group">
+								    <label class="control-label" for="inputSSN">SSN</label>
+								    <div class="controls">
+								      <input type="text" id="inputSSN" placeholder="SSN">
+								    </div>
+								  </div>
+								  
+								  <div class="control-group">
+								    <label class="control-label" for="inputDriverLicense">Driver License</label>
+								    <div class="controls">
+								      <input type="text" id="inputDriverLicense" placeholder="Driver License">
+								    </div>
+								  </div>
+
+								  <div class="control-group">
+								    <label class="control-label" for="inputInsuranceType">Insurance Type</label>
+								    <div class="controls">
+								      <input type="text" id="inputInsuranceType" placeholder="Insurance Type">
+								    </div>
+								  </div>
+
+								  <div class="control-group">
+								    <label class="control-label" for="inputInsuranceID">Insurance ID</label>
+								    <div class="controls">
+								      <input type="text" id="inputInsuranceID" placeholder="Insurance ID">
+								    </div>
+								  </div>
+	
 								  <div class="control-group">
 								      <button type="submit" class="btn">New Patient</button>
 								  </div>
